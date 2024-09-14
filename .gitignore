@@ -30,3 +30,17 @@
 *.exe
 *.out
 *.app
+
+# Build files
+/out
+
+# Clangd
+.cache
+
+# Personal stuffs
+*.vim
+
+# Mac stuffs
+.DS_Store
+
+
