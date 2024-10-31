@@ -1,7 +1,6 @@
-#include <iostream>
 #include "display.h"
 
-Display::Display(){
+Display::Display() : note2("C4"){
 	this->setup();
 }
 void Display::setup(){
@@ -36,6 +35,14 @@ void Display::run(){
 				this->window.close();
 			}
 			else if(event.type == sf::Event::MouseButtonPressed){
+				if(note1.isPlaying){
+					note1.stop();
+					note2.stop();
+				}
+				else{
+					note1.start();
+					note2.start();
+				}
 			}
 		};
 		this->draw(this->window);

@@ -4,7 +4,7 @@ PROJECT(HarmonyTrainer)
 
 INCLUDE (FetchContent)
 
-SET(CMAKE_CXX_STANDARD 14)
+SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 SET(SFML_VERSION "2.6.0")
 SET(FETCHCONTENT_QUIET FALSE)
@@ -26,12 +26,20 @@ find_package(SFML ${SFML_VERSION} COMPONENTS system window graphics audio)
 
 include_directories(
 	include
+	include/components
 	src
+	src/components
 	)
 
 add_executable(${PROJECT_NAME}
 	main.cpp
+
 	src/display.cpp
+	src/components/rectangle.cpp
+	src/components/text.cpp
+	src/components/option.cpp
+
+	src/notes.cpp
 	)
 
 target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system sfml-audio)
