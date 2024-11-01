@@ -40,6 +40,7 @@ add_executable(${PROJECT_NAME}
 	src/components/option.cpp
 
 	src/notes.cpp
+	src/manager.cpp
 	)
 
 target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system sfml-audio)

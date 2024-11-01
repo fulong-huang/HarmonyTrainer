@@ -37,7 +37,6 @@ int Notes::parseNote(std::string strName) {
     pitch *= 2;
     octave--;
   };
-  std::cout << pitch << std::endl;
   return pitch;
 };
 
@@ -65,12 +64,10 @@ void Notes::start() {
   }
   this->isPlaying = true;
   this->noteSound.play();
-  std::cout << "Is playing: " << this->isPlaying << std::endl;
 }
 
 void Notes::stop() {
 	this->noteSound.stop();
 	this->isPlaying = false; 
-	std::cout << "Stop Playing" << std::endl;
 }
 

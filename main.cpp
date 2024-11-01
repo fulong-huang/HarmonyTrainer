@@ -1,11 +1,10 @@
+#include "manager.h"
 #include <iostream>
-#include "display.h"
 
-int main(){
-	std::cout << "HELLO WORLD" << std::endl;
-	Display display;
-	display.run();
-	std::cout << "BYE WORLD" << std::endl;
-	return 0;
+int main() {
+  std::cout << "Running" << std::endl;
+  Manager manager;
+  manager.run();
+  std::cout << "Stopped" << std::endl;
+  return 0;
 }
-

@@ -1,6 +1,6 @@
 #include "display.h"
 
-Display::Display() : note2("C4"){
+Display::Display(){
 	this->setup();
 }
 void Display::setup(){
@@ -27,25 +27,3 @@ void Display::addShape(sf::Drawable* s){
 	this->drawables.push_back(s);
 };
 
-void Display::run(){
-	sf::Event event;
-	while(this->window.isOpen()){
-		while(this->window.pollEvent(event)){
-			if(event.type == sf::Event::Closed){
-				this->window.close();
-			}
-			else if(event.type == sf::Event::MouseButtonPressed){
-				if(note1.isPlaying){
-					note1.stop();
-					note2.stop();
-				}
-				else{
-					note1.start();
-					note2.start();
-				}
-			}
-		};
-		this->draw(this->window);
-	};
-
-}
