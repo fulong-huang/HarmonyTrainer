@@ -1,8 +1,8 @@
 #!/bin/sh
+rm compile_commands.json;
+
 cd out/build; make;
 
-cd ../..; rm compile_commands.json;
-
-ln -s out/build/compile_commands.json .
+cd ../..; ln -s out/build/compile_commands.json .
 
 

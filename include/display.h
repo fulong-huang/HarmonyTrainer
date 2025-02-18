@@ -10,7 +10,7 @@ public:
 
   sf::RenderWindow window;
 
-  void draw(sf::RenderWindow &window);
+  void draw();
   void handleMouseClick(sf::Vector2i mousePos);
 
   void addShape(sf::Drawable *);

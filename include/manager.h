@@ -7,7 +7,7 @@
 class Manager {
 public:
   Manager();
-  ~Manager() {}
+  ~Manager();
 
   // TODO: Move control to another files
   // 	All states need to be managed elsewhere

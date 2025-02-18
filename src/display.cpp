@@ -8,16 +8,18 @@ void Display::setup(){
 	this->window.setFramerateLimit(FRAMERATE);
 };
 
-Display::~Display(){};
+Display::~Display(){
+	this->window.close();
+};
 
-void Display::draw(sf::RenderWindow& window){
+void Display::draw(){
 	
-	window.clear();
+	this->window.clear();
 
 	for(sf::Drawable* s : drawables){
-		window.draw(*s);
+		this->window.draw(*s);
 	};
-	window.display();
+	this->window.display();
 }
 
 void Display::handleMouseClick(sf::Vector2i mousePos){
