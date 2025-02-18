@@ -8,31 +8,41 @@ Notes::Notes() {
 }
 
 Notes::Notes(const std::string& note) {
+	std::cout << "SET WITH STRING: " << note << std::endl;
   this->setNote(note);
   this->isPlaying = false;
 }
 
-int Notes::parseNote(std::string strName) {
+Notes::Notes(int noteNumber) {
+	std::cout << "SET WITH INT: " << noteNumber << std::endl;
+  this->setNote(noteNumber);
+  this->isPlaying = false;
+}
+
+double Notes::parseNote(std::string strName) {
   // ASSUME INPUT ARE CORRECT!!!
   int octave = strName[strName.size() - 1] - '0';
+	int index;
+	if(strName.size() == 3){
+		index = NoteIndex.at(strName.substr(0, 2));
+	}
+	else{
+		index = NoteIndex.at(strName.substr(0, 1));
+	}
 
-  int idx = strName[0] - 'A';
-  if (strName.size() == 3) {
-    switch (strName[0]) {
-    case 'A':
-      idx += 7;
-      break;
-    case 'C':
-    case 'D':
-      idx += 6;
-      break;
-    default:
-      idx += 5;
-    };
+  double pitch = NotePitches[index];
+  while (octave > 0) {
+    pitch *= 2;
+    octave--;
   };
+  return pitch;
+};
 
-  NoteName noteName = static_cast<NoteName>(idx);
-  float pitch = pitches.at(noteName);
+double Notes::parseNote(int noteNumber) {
+  int octave = noteNumber / 12;
+  int idx = noteNumber % 12;
+
+  double pitch = NotePitches[idx];
   while (octave > 0) {
     pitch *= 2;
     octave--;
@@ -41,7 +51,32 @@ int Notes::parseNote(std::string strName) {
 };
 
 void Notes::setNote(std::string noteName) {
+	// Not using double because of the uninvestigated issue:
+	// 	When multiple notes playing at the same time, 
+	// 	a audible beat starts clicking. 
   int pitch = this->parseNote(noteName);
+	std::cout << "PITCH: " << pitch << std::endl;
+  sf::Int16 raw[SAMPLES];
+  double increment = (float)pitch / SAMPLES;
+  double x = 0;
+  for (unsigned i = 0; i < SAMPLES; i++) {
+    raw[i] = AMPLITUDE * sin(x * TWO_PI);
+    x += increment;
+  };
+  if (!this->noteBuffer.loadFromSamples(raw, SAMPLES, 1, SAMPLE_RATE)) {
+    std::cout << "Loading From Samples Failed!!!" << std::endl;
+    return;
+  };
+  this->noteSound.setBuffer(this->noteBuffer);
+  this->noteSound.setLoop(true);
+};
+
+void Notes::setNote(int noteNumber) {
+	// Not using double because of the uninvestigated issue:
+	// 	When multiple notes playing at the same time, 
+	// 	a audible beat starts clicking. 
+  int pitch = this->parseNote(noteNumber);
+	std::cout << "PITCH: " << pitch << std::endl;
   sf::Int16 raw[SAMPLES];
   double increment = (float)pitch / SAMPLES;
   double x = 0;

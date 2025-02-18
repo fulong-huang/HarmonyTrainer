@@ -21,4 +21,6 @@ private:
 
   Notes note1;
   Notes note2;
+
+	void generateRandomNote();
 };

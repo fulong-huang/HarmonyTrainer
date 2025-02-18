@@ -1,6 +1,6 @@
 #include "manager.h"
 
-Manager::Manager() : note2("C4"){
+Manager::Manager(){
 
 }
 
@@ -23,6 +23,7 @@ void Manager::run() {
           this->note1.stop();
           this->note2.stop();
         } else {
+					this->generateRandomNote();
           this->note1.start();
           this->note2.start();
         }
@@ -31,3 +32,15 @@ void Manager::run() {
     this->display.draw();
   };
 }
+
+void Manager::generateRandomNote(){
+	int start = 36; 
+	int end = 60;
+	int randomNoteNumber = start + (std::rand() % (end - start + 1));
+	this->note1.setNote(randomNoteNumber);
+	bool isMajor = std::rand() % 2;
+	this->note2.setNote(randomNoteNumber + isMajor + 3);
+	std::cout << "IS MAJOR: " << (isMajor? "True": "False") << std::endl;
+}
+
+
