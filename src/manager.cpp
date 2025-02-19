@@ -1,7 +1,12 @@
 #include "manager.h"
 
 Manager::Manager(){
+	this->isRunning = true;
+	this->isPlaying = false;
 
+	// Set random seed as current time 
+	// 	to generate different number each time program ran
+	srand(time(NULL));
 }
 
 Manager::~Manager(){
@@ -9,20 +14,63 @@ Manager::~Manager(){
 
 void Manager::run() {
   sf::Event event;
-  while (this->display.window.isOpen()) {
+	std::chrono::steady_clock::time_point begin;
+	std::chrono::steady_clock::time_point current;
+
+	// 0: first chord
+	// 1: first pause
+	// 2: second chord
+	// 3: second pause
+	int phase;
+
+  while (this->isRunning) {
+		if(this->isPlaying){
+			current = std::chrono::steady_clock::now();
+			float timePassed = std::chrono::duration_cast<std::chrono::microseconds>(current-begin).count()/1000000.0;
+			if(timePassed > 2){
+				begin = std::chrono::steady_clock::now();
+				phase = (phase + 1)%4;
+				switch(phase){
+					case 0:
+						this->note1.start();
+						this->note2.start();
+						break;
+					case 1:
+						this->note1.stop();
+						this->note2.stop();
+						break;
+					case 2:
+						this->note1.start();
+						this->note3.start();
+						break;
+					case 3:
+						this->note1.stop();
+						this->note3.stop();
+						this->generateRandomNote();
+						break;
+				}
+			}
+		}
     while (this->display.window.pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
-        if (this->note1.isPlaying) {
+        if (this->isPlaying) {
+					this->isPlaying = false;
           this->note1.stop();
           this->note2.stop();
+          this->note3.stop();
 				}
 				// Exit program
-				return;
+				this->isRunning = false;
       } else if (event.type == sf::Event::MouseButtonPressed) {
-        if (this->note1.isPlaying) {
+        if (this->isPlaying) {
           this->note1.stop();
           this->note2.stop();
+          this->note3.stop();
+					this->isPlaying = false;
         } else {
+					begin = std::chrono::steady_clock::now();
+					phase = 0;
+					this->isPlaying = true;
 					this->generateRandomNote();
           this->note1.start();
           this->note2.start();
@@ -40,6 +88,7 @@ void Manager::generateRandomNote(){
 	this->note1.setNote(randomNoteNumber);
 	bool isMajor = std::rand() % 2;
 	this->note2.setNote(randomNoteNumber + isMajor + 3);
+	this->note3.setNote(randomNoteNumber + !isMajor + 3);
 	std::cout << "IS MAJOR: " << (isMajor? "True": "False") << std::endl;
 }
 

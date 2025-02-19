@@ -1,5 +1,7 @@
 #include "SFML/Graphics.hpp"
 #include <iostream>
+#include <chrono>
+#include <ctime>
 
 #include "display.h"
 #include "notes.h"
@@ -21,6 +23,11 @@ private:
 
   Notes note1;
   Notes note2;
+	Notes note3;
+
+	bool isRunning; 
+	bool isPlaying;
+
 
 	void generateRandomNote();
 };

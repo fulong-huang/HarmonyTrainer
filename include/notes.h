@@ -32,6 +32,7 @@ public:
    * @param Note number is the number of half steps from C1
    */
   void setNote(int noteNumber);
+	void incrementNote(int halfSteps);
 
   bool isPlaying;
   void start();
@@ -47,8 +48,9 @@ private:
   Notes operator=(const Notes &n);
 
   sf::Sound noteSound;
-
   sf::SoundBuffer noteBuffer;
+
+	int currentNote;
 
   double parseNote(std::string strName);
   double parseNote(int noteNumber);

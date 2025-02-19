@@ -54,10 +54,10 @@ void Notes::setNote(std::string noteName) {
 	// Not using double because of the uninvestigated issue:
 	// 	When multiple notes playing at the same time, 
 	// 	a audible beat starts clicking. 
-  int pitch = this->parseNote(noteName);
+  double pitch = this->parseNote(noteName);
 	std::cout << "PITCH: " << pitch << std::endl;
   sf::Int16 raw[SAMPLES];
-  double increment = (float)pitch / SAMPLES;
+  double increment = pitch / SAMPLES;
   double x = 0;
   for (unsigned i = 0; i < SAMPLES; i++) {
     raw[i] = AMPLITUDE * sin(x * TWO_PI);
@@ -75,10 +75,10 @@ void Notes::setNote(int noteNumber) {
 	// Not using double because of the uninvestigated issue:
 	// 	When multiple notes playing at the same time, 
 	// 	a audible beat starts clicking. 
-  int pitch = this->parseNote(noteNumber);
+  double pitch = this->parseNote(noteNumber);
 	std::cout << "PITCH: " << pitch << std::endl;
   sf::Int16 raw[SAMPLES];
-  double increment = (float)pitch / SAMPLES;
+  double increment = pitch / SAMPLES;
   double x = 0;
   for (unsigned i = 0; i < SAMPLES; i++) {
     raw[i] = AMPLITUDE * sin(x * TWO_PI);
@@ -92,6 +92,11 @@ void Notes::setNote(int noteNumber) {
   this->noteSound.setLoop(true);
 };
 
+void Notes::incrementNote(int halfSteps){
+	// TODO: 
+	// Increment note by number of half steps
+}
+
 
 void Notes::start() {
   if (this->isPlaying) {
@@ -102,6 +107,9 @@ void Notes::start() {
 }
 
 void Notes::stop() {
+	if(!this->isPlaying){
+		return;
+	}
 	this->noteSound.stop();
 	this->isPlaying = false; 
 }
