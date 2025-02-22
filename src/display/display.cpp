@@ -6,6 +6,9 @@ Display::Display(){
 void Display::setup(){
 	this->window.create(sf::VideoMode(800, 600), "Harmony Trainer");
 	this->window.setFramerateLimit(FRAMERATE);
+
+	Menu m;
+	this->drawables = m.getDrawables();
 };
 
 Display::~Display(){

@@ -1,5 +1,6 @@
 #include "SFML/Graphics.hpp"
 #include <iostream>
+#include "menu.h"
 
 const int FRAMERATE = 30;
 
