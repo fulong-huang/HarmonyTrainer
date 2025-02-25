@@ -6,7 +6,7 @@ const int FRAMERATE = 30;
 
 class Display {
 public:
-  Display();
+  Display(int width, int height);
   ~Display();
 
   sf::RenderWindow window;
@@ -22,4 +22,6 @@ private:
   std::vector<sf::Drawable *> drawables;
 
   void setup();
+	int width;
+	int height;
 };

@@ -1,6 +1,6 @@
 #include "manager.h"
 
-Manager::Manager(){
+Manager::Manager(): display(800, 600){
 	this->isRunning = true;
 	this->isPlaying = false;
 
@@ -23,13 +23,14 @@ void Manager::run() {
 	// 3: second pause
 	int phase;
 
+	float waitTime = 2;
   while (this->isRunning) {
 		if(this->isPlaying){
 			current = std::chrono::steady_clock::now();
 			float timePassed = std::chrono::duration_cast<std::chrono::microseconds>(current-begin).count()/1000000.0;
-			if(timePassed > 2){
+			if(timePassed > waitTime){
 				begin = std::chrono::steady_clock::now();
-				phase = (phase + 1)%4;
+				phase = (phase + 1)%10;
 				switch(phase){
 					case 0:
 						this->note1.start();
@@ -40,13 +41,38 @@ void Manager::run() {
 						this->note2.stop();
 						break;
 					case 2:
+						waitTime = 0.5;
 						this->note1.start();
-						this->note3.start();
 						break;
 					case 3:
 						this->note1.stop();
+						this->note2.start();
+						break;
+					case 4:
+						this->note2.stop();
+						break;
+
+					case 5:
+						waitTime = 1;
+						this->note1.start();
+						this->note3.start();
+						break;
+					case 6:
+						this->note1.stop();
+						this->note3.stop();
+						break;
+					case 7:
+						waitTime = 0.5;
+						this->note1.start();
+						break;
+					case 8:
+						this->note1.stop();
+						this->note3.start();
+						break;
+					case 9:
 						this->note3.stop();
 						this->generateRandomNote();
+						waitTime = 2;
 						break;
 				}
 			}
@@ -70,6 +96,7 @@ void Manager::run() {
         } else {
 					begin = std::chrono::steady_clock::now();
 					phase = 0;
+					waitTime = 2;
 					this->isPlaying = true;
 					this->generateRandomNote();
           this->note1.start();
@@ -82,14 +109,24 @@ void Manager::run() {
 }
 
 void Manager::generateRandomNote(){
-	int start = 36; 
-	int end = 60;
+	int start = 45; 
+	int end = 70;
 	int randomNoteNumber = start + (std::rand() % (end - start + 1));
 	this->note1.setNote(randomNoteNumber);
 	bool isMajor = std::rand() % 2;
-	this->note2.setNote(randomNoteNumber + isMajor + 3);
-	this->note3.setNote(randomNoteNumber + !isMajor + 3);
+	this->note2.setNote(randomNoteNumber - isMajor - 3);
+	this->note3.setNote(randomNoteNumber - !isMajor - 3);
 	std::cout << "IS MAJOR: " << (isMajor? "True": "False") << std::endl;
+
+	return;
+// 	int start = 36; 
+// 	int end = 60;
+// 	int randomNoteNumber = start + (std::rand() % (end - start + 1));
+// 	this->note1.setNote(randomNoteNumber);
+// 	bool isMajor = std::rand() % 2;
+// 	this->note2.setNote(randomNoteNumber + isMajor + 3);
+// 	this->note3.setNote(randomNoteNumber + !isMajor + 3);
+// 	std::cout << "IS MAJOR: " << (isMajor? "True": "False") << std::endl;
 }
 
 

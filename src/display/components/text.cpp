@@ -56,9 +56,11 @@ void Text::setup() {
     this->text.setFillColor(this->color);
   };
   this->text.setStyle(style);
+	this->text.setOrigin({this->text.getLocalBounds().left, this->text.getLocalBounds().top});
   if (centered) {
-    float width = this->text.getLocalBounds().width;
-    float height = this->text.getLocalBounds().height;
+		sf::FloatRect globBound = this->text.getGlobalBounds();
+    float width = globBound.width;
+    float height = globBound.height;
     this->text.setPosition(this->pos.x - width / 2, this->pos.y - height / 2);
   } else {
     this->text.setPosition(this->pos.x, this->pos.y);
@@ -66,7 +68,10 @@ void Text::setup() {
 };
 
 sf::Drawable *Text::getDrawable() {
-  std::cout << "GET" << std::endl;
+  return &this->text;
+};
+
+sf::Text *Text::getTextObject() {
   return &this->text;
 };
 

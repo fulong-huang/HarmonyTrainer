@@ -9,6 +9,7 @@ public:
 	Text operator=(const Text& t);
 
 	sf::Drawable* getDrawable() override;
+	sf::Text* getTextObject();
 	void setColor(sf::Color color) override;
 	void setPosition(sf::Vector2i pos) override;
 	void setSize(int width, int height) override;

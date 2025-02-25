@@ -1,13 +1,13 @@
 #include "display.h"
 
-Display::Display(){
+Display::Display(int width, int height): width(width), height(height){
 	this->setup();
 }
 void Display::setup(){
-	this->window.create(sf::VideoMode(800, 600), "Harmony Trainer");
+	this->window.create(sf::VideoMode(this->width, this->height), "Harmony Trainer");
 	this->window.setFramerateLimit(FRAMERATE);
 
-	Menu m;
+	Menu m({0, 20}, this->width, 30, {20, 0});
 	this->drawables = m.getDrawables();
 };
 

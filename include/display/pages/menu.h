@@ -5,7 +5,8 @@
 
 class Menu {
 public:
-  Menu();
+  Menu(sf::Vector2i pos, int width, int height,
+			sf::Vector2i padding={0, 0}, sf::Vector2i margin={0, 0});
   ~Menu();
 
 	std::vector<sf::Drawable *> getDrawables();
@@ -16,6 +17,11 @@ private:
   std::vector<sf::Drawable *> drawables;
 
   void setup();
+	sf::Vector2i position;
+	sf::Vector2i padding;
+	sf::Vector2i margin;
+	int width;
+	int height;
 };
 
 
