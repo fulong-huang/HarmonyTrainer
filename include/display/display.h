@@ -20,6 +20,7 @@ private:
   Display(const Display &d);
   Display operator=(const Display &d);
   std::vector<sf::Drawable *> drawables;
+	Menu menu;
 
   void setup();
 	int width;

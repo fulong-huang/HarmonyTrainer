@@ -1,5 +1,5 @@
 #!/bin/sh
-rm compile_commands.json;
+rm ./compile_commands.json;
 
 cd out/build; make;
 

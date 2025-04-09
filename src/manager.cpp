@@ -30,7 +30,7 @@ void Manager::run() {
 			float timePassed = std::chrono::duration_cast<std::chrono::microseconds>(current-begin).count()/1000000.0;
 			if(timePassed > waitTime){
 				begin = std::chrono::steady_clock::now();
-				phase = (phase + 1)%10;
+				phase = (phase + 1)%6;
 				switch(phase){
 					case 0:
 						this->note1.start();
@@ -42,37 +42,20 @@ void Manager::run() {
 						break;
 					case 2:
 						waitTime = 0.5;
-						this->note1.start();
-						break;
-					case 3:
-						this->note1.stop();
 						this->note2.start();
 						break;
-					case 4:
+					case 3:
 						this->note2.stop();
+						this->note3.start();
 						break;
-
+					case 4:
+						this->note3.stop();
+						this->note1.start();
+						break;
 					case 5:
-						waitTime = 1;
-						this->note1.start();
-						this->note3.start();
-						break;
-					case 6:
 						this->note1.stop();
-						this->note3.stop();
-						break;
-					case 7:
-						waitTime = 0.5;
-						this->note1.start();
-						break;
-					case 8:
-						this->note1.stop();
-						this->note3.start();
-						break;
-					case 9:
-						this->note3.stop();
-						this->generateRandomNote();
 						waitTime = 2;
+						this->generateRandomNote();
 						break;
 				}
 			}
@@ -113,9 +96,11 @@ void Manager::generateRandomNote(){
 	int end = 70;
 	int randomNoteNumber = start + (std::rand() % (end - start + 1));
 	this->note1.setNote(randomNoteNumber);
-	bool isMajor = std::rand() % 2;
+	int rand = std::rand();
+	bool isMajor = rand % 2;
+	std::cout << "RAND: "<< rand << std::endl;
 	this->note2.setNote(randomNoteNumber - isMajor - 3);
-	this->note3.setNote(randomNoteNumber - !isMajor - 3);
+	this->note3.setNote(randomNoteNumber - 1 - isMajor);
 	std::cout << "IS MAJOR: " << (isMajor? "True": "False") << std::endl;
 
 	return;

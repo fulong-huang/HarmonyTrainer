@@ -1,8 +1,10 @@
 #include "rectangle.h"
 #include <iostream>
 
-Rectangle::Rectangle(sf::Color color, sf::Vector2i pos, int width, int height, bool transparent): 
-	color(color), pos(pos), width(width), height(height), transparent(transparent)
+Rectangle::Rectangle(sf::Color color, sf::Vector2i pos, int width, int height,
+		bool transparent, float outlineThickness, sf::Color outlineColor): 
+	color(color), pos(pos), width(width), height(height), 
+	transparent(transparent), outlineThickness(outlineThickness), outlineColor(outlineColor)
 {
 	this->shape.setSize({float(this->width), float(this->height)});
 	if(this->transparent){
@@ -10,6 +12,10 @@ Rectangle::Rectangle(sf::Color color, sf::Vector2i pos, int width, int height, b
 	}
 	else{
 		this->shape.setFillColor(this->color);
+		if(this->outlineThickness){
+			this->shape.setOutlineThickness(this->outlineThickness);
+			this->shape.setOutlineColor(this->outlineColor);
+		}
 	};
 	this->shape.setPosition(this->pos.x, this->pos.y);
 };
