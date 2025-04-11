@@ -48,8 +48,8 @@ Circle Circle::operator=(const Circle& c){
 	return *this;
 };
 
-sf::Drawable* Circle::getDrawable(){
-	return &this->shape;
+void Circle::draw(sf::RenderWindow *window){
+	window->draw(this->shape);
 };
 
 void Circle::setColor(sf::Color color){

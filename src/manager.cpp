@@ -6,7 +6,6 @@ Manager::Manager(): width(800), height(600){
 
 	this->window.create(sf::VideoMode(this->width, this->height), "Harmony Trainer");
 	this->window.setFramerateLimit(FRAMERATE);
-	// this->drawables = this->menu.getDrawables();
 
 	// Set random seed as current time 
 	// 	to generate different number each time program ran

@@ -67,8 +67,8 @@ void Text::setup() {
   };
 };
 
-sf::Drawable *Text::getDrawable() {
-  return &this->text;
+void Text::draw(sf::RenderWindow *window){
+	window->draw(this->text);
 };
 
 sf::Text *Text::getTextObject() {

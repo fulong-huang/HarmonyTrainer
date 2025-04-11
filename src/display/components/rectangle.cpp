@@ -55,8 +55,8 @@ Rectangle Rectangle::operator=(const Rectangle
 	return *this;
 };
 
-sf::Drawable* Rectangle::getDrawable(){
-	return &this->shape;
+void Rectangle::draw(sf::RenderWindow *window){
+	window->draw(this->shape);
 };
 
 void Rectangle::setColor(sf::Color color){

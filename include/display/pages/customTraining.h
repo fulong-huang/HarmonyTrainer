@@ -3,6 +3,7 @@
 #include "rectangle.h"
 #include "circle.h"
 #include "text.h"
+#include "customTrainingItem.h"
 
 class CustomTraining {
 public:
@@ -13,16 +14,13 @@ public:
 	// 	Create new custom training
 	void createTraining();
 
-	// TODO: 
-	// 	Draw custom training page
 	void draw(sf::RenderWindow *window);
 
 private:
   CustomTraining(const CustomTraining &d);
   CustomTraining operator=(const CustomTraining &d);
-  std::vector<sf::Drawable *> drawables;
-	std::vector<Shape *> shapes;
 
+	std::vector<CustomTrainingItem*> items;
   void setup();
 
 };

@@ -10,7 +10,7 @@ public:
 	Circle(const Circle& c);
 	Circle operator=(const Circle& c);
 
-	sf::Drawable* getDrawable() override;
+	void draw(sf::RenderWindow *window) override;
 	void setColor(sf::Color color) override;
 	void setPosition(sf::Vector2i pos) override;
 	void setSize(int r, int diff) override;
