@@ -38,9 +38,10 @@ include_directories(
 add_executable(${PROJECT_NAME}
 	main.cpp
 
-	src/display/display.cpp
 	src/display/pages/menu.cpp
+	src/display/pages/customTraining.cpp
 	src/display/components/rectangle.cpp
+	src/display/components/circle.cpp
 	src/display/components/text.cpp
 	src/display/components/option.cpp
 

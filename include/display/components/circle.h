@@ -1,14 +1,14 @@
 #pragma once
 
+#include "SFML/Graphics.hpp"
 #include "shape.h"
 
-class Rectangle : public Shape{
+class Circle : public Shape{
 public:
-	Rectangle(sf::Color color, sf::Vector2i pos, int width, int height, 
-			bool transparent = false, float outlineThickness = 0, sf::Color outlineColor = sf::Color::Transparent);
-	~Rectangle() override;
-	Rectangle(const Rectangle& c);
-	Rectangle operator=(const Rectangle& c);
+	Circle(sf::Color color, sf::Vector2i pos, int radius, bool transparent = false);
+	~Circle();
+	Circle(const Circle& c);
+	Circle operator=(const Circle& c);
 
 	sf::Drawable* getDrawable() override;
 	void setColor(sf::Color color) override;
@@ -22,16 +22,10 @@ public:
 
 	bool boundCheck(sf::Vector2i pos) override;
 private:
-	sf::RectangleShape shape;
+	sf::CircleShape shape;
 	sf::Color color;
 	sf::Vector2i pos;
-	int width;
-	int height;
 	bool transparent;
-	float outlineThickness;
-	sf::Color outlineColor;
+	int radius;
 
 };
-
-
-

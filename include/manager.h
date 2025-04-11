@@ -3,9 +3,11 @@
 #include <chrono>
 #include <ctime>
 
-#include "display.h"
 #include "notes.h"
+#include "menu.h"
+#include "customTraining.h"
 
+const int FRAMERATE = 30;
 class Manager {
 public:
   Manager();
@@ -19,7 +21,16 @@ private:
   Manager(const Manager &m);
   Manager operator=(const Manager &m);
 
-  Display display;
+  sf::RenderWindow window;
+
+  void draw();
+  void handleMouseClick(sf::Vector2i mousePos);
+
+	Menu menu;
+	CustomTraining customTraining;
+
+
+	int width, height;
 
   Notes note1;
   Notes note2;

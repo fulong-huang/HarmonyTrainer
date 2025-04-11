@@ -1,6 +1,7 @@
 #include "SFML/Graphics.hpp"
 #include <iostream>
 #include "rectangle.h"
+#include "circle.h"
 #include "text.h"
 
 class Menu {

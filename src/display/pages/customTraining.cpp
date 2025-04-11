@@ -1,15 +1,15 @@
-#include "menu.h"
+#include "customTraining.h"
 
-Menu::Menu(){
+CustomTraining::CustomTraining(){
 	this->setup();
 }
-Menu::~Menu(){
+CustomTraining::~CustomTraining(){
 	for(Shape *s : shapes){
 		delete s;
 	}
 };
 
-void Menu::setup(){
+void CustomTraining::setup(){
 	sf::Vector2i startingPosition = {30, 20};
 	sf::Vector2i menuPadding = {20, 30};
 	int optionWidth = 50;
@@ -79,9 +79,12 @@ void Menu::setup(){
 	this->shapes.push_back(dot3);
 };
 
-std::vector<sf::Drawable *> Menu::getDrawables(){
-	return this->drawables;
+void CustomTraining::draw(sf::RenderWindow *window){
+	for(sf::Drawable* s : drawables){
+		window->draw(*s);
+	}
 }
+
 
 
 

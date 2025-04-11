@@ -1,8 +1,12 @@
 #include "manager.h"
 
-Manager::Manager(): display(800, 600){
+Manager::Manager(): width(800), height(600){
 	this->isRunning = true;
 	this->isPlaying = false;
+
+	this->window.create(sf::VideoMode(this->width, this->height), "Harmony Trainer");
+	this->window.setFramerateLimit(FRAMERATE);
+	// this->drawables = this->menu.getDrawables();
 
 	// Set random seed as current time 
 	// 	to generate different number each time program ran
@@ -10,6 +14,7 @@ Manager::Manager(): display(800, 600){
 }
 
 Manager::~Manager(){
+	this->window.close();
 }
 
 void Manager::run() {
@@ -60,7 +65,7 @@ void Manager::run() {
 				}
 			}
 		}
-    while (this->display.window.pollEvent(event)) {
+    while (this->window.pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
         if (this->isPlaying) {
 					this->isPlaying = false;
@@ -87,7 +92,7 @@ void Manager::run() {
         }
       }
     };
-    this->display.draw();
+    this->draw();
   };
 }
 
@@ -114,4 +119,13 @@ void Manager::generateRandomNote(){
 // 	std::cout << "IS MAJOR: " << (isMajor? "True": "False") << std::endl;
 }
 
+void Manager::draw(){
+	
+	this->window.clear();
+	this->customTraining.draw(&this->window);
+	this->window.display();
+}
+
+void Manager::handleMouseClick(sf::Vector2i mousePos){
+}
 
