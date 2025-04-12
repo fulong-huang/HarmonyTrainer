@@ -6,10 +6,14 @@
 
 class CustomTrainingItem {
 public:
-  CustomTrainingItem(std::string title, sf::Vector2i startingPosition);
+  CustomTrainingItem(std::string title, int width, sf::Vector2i startingPosition);
   ~CustomTrainingItem();
 
 	void draw(sf::RenderWindow *window);
+	
+	// TODO: 
+	// 	Change width of item for rendering
+	void setWidth(int width);
 
 private:
   CustomTrainingItem(const CustomTrainingItem &d);
@@ -18,6 +22,7 @@ private:
 	sf::Vector2i startingPosition;
   void setup();
 	std::string title;
+	int width;
 
 	Text* nameDisplay;
 	Rectangle* itemContainer;

@@ -1,6 +1,8 @@
 #include "customTraining.h"
 
-CustomTraining::CustomTraining() {
+CustomTraining::CustomTraining(int width, sf::Vector2i margin):
+	width(width), margin(margin)
+{
 	this->setup();
 }
 
@@ -11,9 +13,16 @@ CustomTraining::~CustomTraining(){
 };
 
 void CustomTraining::setup(){
-	CustomTrainingItem* item1 = new CustomTrainingItem("First traning item", {30, 50});
+	gap = 150;
+
+	sf::Vector2i currPos = margin;
+
+	CustomTrainingItem* item1 = new CustomTrainingItem("First traning item", width - 2 * margin.x, margin);
 	items.push_back(item1);
-	items.push_back(new CustomTrainingItem("SECOND TRANING ITEM", {30, 250}));
+	margin.y += gap;
+	items.push_back(new CustomTrainingItem("SECOND TRANING ITEM", width-2*margin.x, margin));
+	margin.y += gap;
+	items.push_back(new CustomTrainingItem("THIRD TRANING ITEM", width-2*margin.x, margin));
 };
 
 void CustomTraining::draw(sf::RenderWindow *window){

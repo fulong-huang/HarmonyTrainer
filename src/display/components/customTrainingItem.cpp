@@ -1,7 +1,7 @@
 #include "customTrainingItem.h"
 
-CustomTrainingItem::CustomTrainingItem(std::string title, sf::Vector2i startingPosition): 
-	startingPosition(startingPosition), title(title)
+CustomTrainingItem::CustomTrainingItem(std::string title, int width, sf::Vector2i startingPosition): 
+	startingPosition(startingPosition), title(title), width(width)
 {
 	this->setup();
 }
@@ -26,10 +26,17 @@ void CustomTrainingItem::setup(){
 
 	sf::FloatRect globSize = this->nameDisplay->getTextObject()->getGlobalBounds();
 
+// 	itemContainer = new Rectangle(
+// 			sf::Color(100, 0, 0),
+// 			{(int)globSize.left - menuPadding.x, (int)globSize.top - menuPadding.y},
+// 			globSize.width + menuPadding.x * 2 + optionWidth + optionPadding, globSize.height + menuPadding.y * 2,
+// 			false, 9, sf::Color::Blue
+// 			);
+
 	itemContainer = new Rectangle(
 			sf::Color(100, 0, 0),
 			{(int)globSize.left - menuPadding.x, (int)globSize.top - menuPadding.y},
-			globSize.width + menuPadding.x * 2 + optionWidth + optionPadding, globSize.height + menuPadding.y * 2,
+			this->width, globSize.height + menuPadding.y * 2,
 			false, 9, sf::Color::Blue
 			);
 

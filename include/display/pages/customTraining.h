@@ -7,7 +7,10 @@
 
 class CustomTraining {
 public:
-  CustomTraining();
+	// width for width of screen
+	// position for height of scroll
+	// margin for spaces(margin) on both side
+  CustomTraining(int width, sf::Vector2i margin);
   ~CustomTraining();
 	
 	// TODO: 
@@ -21,6 +24,10 @@ private:
   CustomTraining operator=(const CustomTraining &d);
 
 	std::vector<CustomTrainingItem*> items;
+
+	sf::Vector2i margin;
+	int width, height, gap;
+
   void setup();
 
 };

@@ -26,10 +26,10 @@ private:
   void draw();
   void handleMouseClick(sf::Vector2i mousePos);
 
-	Menu menu;
 	CustomTraining customTraining;
 
 
+	// Display: 
 	int width, height;
 
   Notes note1;
@@ -40,5 +40,14 @@ private:
 	bool isPlaying;
 
 
+	// Sound
+	std::chrono::steady_clock::time_point begin;
+	std::chrono::steady_clock::time_point current;
+
+	float waitTime;
+	int phase;
+
+
+	void soundControl();
 	void generateRandomNote();
 };

@@ -1,6 +1,8 @@
 #include "manager.h"
 
-Manager::Manager(): width(800), height(600){
+Manager::Manager():
+	width(800), height(600), customTraining(800, {30, 60})
+{
 	this->isRunning = true;
 	this->isPlaying = false;
 
@@ -10,32 +12,66 @@ Manager::Manager(): width(800), height(600){
 	// Set random seed as current time 
 	// 	to generate different number each time program ran
 	srand(time(NULL));
+
+	waitTime = 2;
+	phase = 0;
 }
 
 Manager::~Manager(){
 	this->window.close();
+	this->note1.stop();
+	this->note2.stop();
+	this->note3.stop();
 }
 
 void Manager::run() {
   sf::Event event;
-	std::chrono::steady_clock::time_point begin;
-	std::chrono::steady_clock::time_point current;
 
 	// 0: first chord
 	// 1: first pause
 	// 2: second chord
 	// 3: second pause
-	int phase;
 
-	float waitTime = 2;
   while (this->isRunning) {
+
+		soundControl();
+
+    while (this->window.pollEvent(event)) {
+      if (event.type == sf::Event::Closed) {
+        if (this->isPlaying) {
+					this->isPlaying = false;
+				}
+				// Exit program
+				this->isRunning = false;
+      } else if (event.type == sf::Event::MouseButtonPressed) {
+        if (this->isPlaying) {
+          this->note1.stop();
+          this->note2.stop();
+          this->note3.stop();
+					this->isPlaying = false;
+        } else {
+					this->begin = std::chrono::steady_clock::now();
+					this->phase = 0;
+					this->waitTime = 2;
+					this->isPlaying = true;
+					this->generateRandomNote();
+          this->note1.start();
+          this->note2.start();
+        }
+      }
+    };
+    this->draw();
+  };
+}
+
+void Manager::soundControl(){
 		if(this->isPlaying){
-			current = std::chrono::steady_clock::now();
-			float timePassed = std::chrono::duration_cast<std::chrono::microseconds>(current-begin).count()/1000000.0;
-			if(timePassed > waitTime){
-				begin = std::chrono::steady_clock::now();
-				phase = (phase + 1)%6;
-				switch(phase){
+			this->current = std::chrono::steady_clock::now();
+			float timePassed = std::chrono::duration_cast<std::chrono::microseconds>(this->current-this->begin).count()/1000000.0;
+			if(timePassed > this->waitTime){
+				this->begin = std::chrono::steady_clock::now();
+				this->phase = (this->phase + 1)%6;
+				switch(this->phase){
 					case 0:
 						this->note1.start();
 						this->note2.start();
@@ -45,7 +81,7 @@ void Manager::run() {
 						this->note2.stop();
 						break;
 					case 2:
-						waitTime = 0.5;
+						this->waitTime = 0.5;
 						this->note2.start();
 						break;
 					case 3:
@@ -58,41 +94,12 @@ void Manager::run() {
 						break;
 					case 5:
 						this->note1.stop();
-						waitTime = 2;
+						this->waitTime = 2;
 						this->generateRandomNote();
 						break;
 				}
 			}
 		}
-    while (this->window.pollEvent(event)) {
-      if (event.type == sf::Event::Closed) {
-        if (this->isPlaying) {
-					this->isPlaying = false;
-          this->note1.stop();
-          this->note2.stop();
-          this->note3.stop();
-				}
-				// Exit program
-				this->isRunning = false;
-      } else if (event.type == sf::Event::MouseButtonPressed) {
-        if (this->isPlaying) {
-          this->note1.stop();
-          this->note2.stop();
-          this->note3.stop();
-					this->isPlaying = false;
-        } else {
-					begin = std::chrono::steady_clock::now();
-					phase = 0;
-					waitTime = 2;
-					this->isPlaying = true;
-					this->generateRandomNote();
-          this->note1.start();
-          this->note2.start();
-        }
-      }
-    };
-    this->draw();
-  };
 }
 
 void Manager::generateRandomNote(){
