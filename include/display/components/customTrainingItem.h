@@ -3,6 +3,7 @@
 #include "rectangle.h"
 #include "circle.h"
 #include "text.h"
+#include "option.h"
 
 class CustomTrainingItem {
 public:
@@ -30,7 +31,7 @@ private:
 	// TODO: 
 	// 	Create new class for optionButton
 	// 	Class should also check collision and take in functions to execute if in bound
-	Rectangle* optionButton;
+	Option* optionButton;
 
 
 };

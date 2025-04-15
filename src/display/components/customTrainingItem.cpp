@@ -26,13 +26,6 @@ void CustomTrainingItem::setup(){
 
 	sf::FloatRect globSize = this->nameDisplay->getTextObject()->getGlobalBounds();
 
-// 	itemContainer = new Rectangle(
-// 			sf::Color(100, 0, 0),
-// 			{(int)globSize.left - menuPadding.x, (int)globSize.top - menuPadding.y},
-// 			globSize.width + menuPadding.x * 2 + optionWidth + optionPadding, globSize.height + menuPadding.y * 2,
-// 			false, 9, sf::Color::Blue
-// 			);
-
 	itemContainer = new Rectangle(
 			sf::Color(100, 0, 0),
 			{(int)globSize.left - menuPadding.x, (int)globSize.top - menuPadding.y},
@@ -40,39 +33,12 @@ void CustomTrainingItem::setup(){
 			false, 9, sf::Color::Blue
 			);
 
-	optionButton = new Rectangle(
-			sf::Color(100, 100, 100),
-			{(int)globSize.left + (int)globSize.width + optionPadding, (int)globSize.top - menuPadding.y},
-			optionWidth + menuPadding.x, globSize.height + menuPadding.y * 2
+	optionButton = new Option(
+			// {(int)globSize.left + (int)globSize.width + optionPadding, (int)globSize.top - menuPadding.y},
+			{(int)this->width - optionPadding - menuPadding.x/2, (int)globSize.top - menuPadding.y},
+			{optionWidth + menuPadding.x, (int)globSize.height + menuPadding.y * 2},
+			5
 			);
-// 
-// 	float rectHeight = globSize.height + menuPadding.y * 2;
-// 	float radius = optionWidth / 6.0;
-// 	Circle* dot1 = new Circle(
-// 			sf::Color(150, 150, 150),
-// 			{
-// 				(int)globSize.left + (int)globSize.width + optionPadding + optionWidth / 2,
-// 				(int)(globSize.top - menuPadding.y + rectHeight/4 - radius)
-// 			},
-// 			radius
-// 			);
-// 	Circle* dot2 = new Circle(
-// 			sf::Color(150, 150, 150),
-// 			{
-// 				(int)globSize.left + (int)globSize.width + optionPadding + optionWidth / 2,
-// 				(int)(globSize.top - menuPadding.y + rectHeight/2 - radius)
-// 			},
-// 			radius
-// 			);
-// 	Circle* dot3 = new Circle(
-// 			sf::Color(150, 150, 150),
-// 			{
-// 				(int)globSize.left + (int)globSize.width + optionPadding + optionWidth / 2,
-// 				(int)(globSize.top - menuPadding.y + 3 * rectHeight/4 - radius)
-// 			},
-// 			radius
-// 			);
-
 };
 
 void CustomTrainingItem::draw(sf::RenderWindow *window){
