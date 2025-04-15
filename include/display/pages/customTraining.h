@@ -19,6 +19,8 @@ public:
 
 	void draw(sf::RenderWindow *window);
 
+	void handleMouseClick(sf::Vector2i mousePos);
+
 private:
   CustomTraining(const CustomTraining &d);
   CustomTraining operator=(const CustomTraining &d);

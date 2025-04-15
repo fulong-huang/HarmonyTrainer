@@ -3,6 +3,7 @@
 CustomTrainingItem::CustomTrainingItem(std::string title, int width, sf::Vector2i startingPosition): 
 	startingPosition(startingPosition), title(title), width(width)
 {
+	std::cout << "STARTING: " << startingPosition.x << ", " << startingPosition.y << std::endl;
 	this->setup();
 }
 
@@ -25,10 +26,13 @@ void CustomTrainingItem::setup(){
 			false);
 
 	sf::FloatRect globSize = this->nameDisplay->getTextObject()->getGlobalBounds();
+	this->endingPosition = this->startingPosition + sf::Vector2i{
+		this->width, (int)globSize.height + menuPadding.y * 2
+	};
 
 	itemContainer = new Rectangle(
 			sf::Color(100, 0, 0),
-			{(int)globSize.left - menuPadding.x, (int)globSize.top - menuPadding.y},
+			this->startingPosition,
 			this->width, globSize.height + menuPadding.y * 2,
 			false, 9, sf::Color::Blue
 			);
@@ -47,6 +51,23 @@ void CustomTrainingItem::draw(sf::RenderWindow *window){
 	optionButton->draw(window);
 }
 
+int CustomTrainingItem::handleMouseClick(sf::Vector2i mousePos){
+
+	if(this->itemContainer->boundCheck(mousePos)){
+		if(this->optionButton->handleMouseClick(mousePos)){
+			return 2;
+		}
+		else{
+			return 1;
+		}
+
+	}
+	return 0;
+}
+
+std::string CustomTrainingItem::getTitle(){
+	return this->title;
+}
 
 
 

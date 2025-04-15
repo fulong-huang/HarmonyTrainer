@@ -46,5 +46,9 @@ void Option::setup(){
 
 }
 
+bool Option::handleMouseClick(sf::Vector2i mousePos){
+	return this->background->boundCheck(mousePos);
+}
+
 
 

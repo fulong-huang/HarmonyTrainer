@@ -9,6 +9,7 @@ class Option{
 		~Option();
 
 		void draw(sf::RenderWindow *window);
+		bool handleMouseClick(sf::Vector2i mousePos);
 	
 	
 	

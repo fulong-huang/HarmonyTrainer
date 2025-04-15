@@ -34,34 +34,50 @@ void Manager::run() {
 
   while (this->isRunning) {
 
-		soundControl();
+		// soundControl();
 
     while (this->window.pollEvent(event)) {
-      if (event.type == sf::Event::Closed) {
-        if (this->isPlaying) {
+			if (event.type == sf::Event::Closed) {
+				if (this->isPlaying) {
 					this->isPlaying = false;
 				}
 				// Exit program
 				this->isRunning = false;
-      } else if (event.type == sf::Event::MouseButtonPressed) {
-        if (this->isPlaying) {
-          this->note1.stop();
-          this->note2.stop();
-          this->note3.stop();
-					this->isPlaying = false;
-        } else {
-					this->begin = std::chrono::steady_clock::now();
-					this->phase = 0;
-					this->waitTime = 2;
-					this->isPlaying = true;
-					this->generateRandomNote();
-          this->note1.start();
-          this->note2.start();
-        }
-      }
+			}
+			else if(event.type == sf::Event::MouseButtonPressed){
+				this->handleMouseClick(sf::Mouse::getPosition(this->window));
+			}
+//       } else if (event.type == sf::Event::MouseButtonPressed) {
+//         if (this->isPlaying) {
+//           this->note1.stop();
+//           this->note2.stop();
+//           this->note3.stop();
+// 					this->isPlaying = false;
+//         } else {
+// 					this->begin = std::chrono::steady_clock::now();
+// 					this->phase = 0;
+// 					this->waitTime = 2;
+// 					this->isPlaying = true;
+// 					this->generateRandomNote();
+//           this->note1.start();
+//           this->note2.start();
+//         }
+//       }
     };
     this->draw();
   };
+}
+
+void Manager::handleMouseClick(sf::Vector2i mousePos){
+	std::cout << "POSITION: " << mousePos.x << ", " << mousePos.y << std::endl;
+	customTraining.handleMouseClick(mousePos);
+}
+
+void Manager::draw(){
+	
+	this->window.clear();
+	this->customTraining.draw(&this->window);
+	this->window.display();
 }
 
 void Manager::soundControl(){
@@ -123,15 +139,5 @@ void Manager::generateRandomNote(){
 // 	this->note2.setNote(randomNoteNumber + isMajor + 3);
 // 	this->note3.setNote(randomNoteNumber + !isMajor + 3);
 // 	std::cout << "IS MAJOR: " << (isMajor? "True": "False") << std::endl;
-}
-
-void Manager::draw(){
-	
-	this->window.clear();
-	this->customTraining.draw(&this->window);
-	this->window.display();
-}
-
-void Manager::handleMouseClick(sf::Vector2i mousePos){
 }
 

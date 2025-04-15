@@ -11,16 +11,24 @@ public:
   ~CustomTrainingItem();
 
 	void draw(sf::RenderWindow *window);
+
+	// Return status:
+	// 	0: no action / miss click
+	// 	1: active item
+	// 	2: open setting
+	int handleMouseClick(sf::Vector2i mousePos);
 	
 	// TODO: 
 	// 	Change width of item for rendering
 	void setWidth(int width);
+	std::string getTitle();
 
 private:
   CustomTrainingItem(const CustomTrainingItem &d);
   CustomTrainingItem operator=(const CustomTrainingItem &d);
 
 	sf::Vector2i startingPosition;
+	sf::Vector2i endingPosition;
   void setup();
 	std::string title;
 	int width;

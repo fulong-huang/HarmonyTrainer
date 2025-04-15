@@ -15,7 +15,6 @@ CustomTraining::~CustomTraining(){
 void CustomTraining::setup(){
 	gap = 150;
 
-	sf::Vector2i currPos = margin;
 
 	CustomTrainingItem* item1 = new CustomTrainingItem("First traning item", width - 2 * margin.x, margin);
 	items.push_back(item1);
@@ -32,6 +31,19 @@ void CustomTraining::draw(sf::RenderWindow *window){
 
 }
 
+void CustomTraining::handleMouseClick(sf::Vector2i mousePos){
+	for(CustomTrainingItem* item : this->items){
+		int status = item->handleMouseClick(mousePos);
+		if(status == 1){
+			std::cout << "Starting custom training " << item->getTitle() << std::endl;
+			break;
+		}
+		else if(status == 2){
+			std::cout << "Opening option of " << item->getTitle() << std::endl;
+			break;
+		}
+	}
+}
 
 
 
