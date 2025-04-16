@@ -1,7 +1,7 @@
 #include "soundControl.h"
 
 SoundControl::SoundControl(){
-	this->isPlaying = false;
+	this->playing = false;
 
 	// Set random seed as current time 
 	// 	to generate different number each time program ran
@@ -9,6 +9,7 @@ SoundControl::SoundControl(){
 
 	waitTime = 2;
 	phase = 0;
+	this->generateRandomNote();
 }
 
 SoundControl::~SoundControl(){
@@ -18,14 +19,24 @@ SoundControl::~SoundControl(){
 }
 
 void SoundControl::start(){
-	this->isPlaying = true;
+	this->playing = true;
+	this->begin = std::chrono::steady_clock::now();
+	this->note1.start();
+	this->note2.start();
 }
 void SoundControl::stop(){
-	this->isPlaying = false;
+	this->playing = false;
+	this->note1.stop();
+	this->note2.stop();
+	this->note3.stop();
 }
 
-void SoundControl::soundControl(){
-		if(this->isPlaying){
+bool SoundControl::isPlaying(){
+	return this->playing;
+}
+
+void SoundControl::playSound(){
+		if(this->playing){
 			this->current = std::chrono::steady_clock::now();
 			float timePassed = std::chrono::duration_cast<std::chrono::microseconds>(this->current-this->begin).count()/1000000.0;
 			if(timePassed > this->waitTime){

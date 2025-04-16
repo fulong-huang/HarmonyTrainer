@@ -7,15 +7,22 @@ Manager::Manager():
 
 	this->window.create(sf::VideoMode(this->width, this->height), "Harmony Trainer");
 	this->window.setFramerateLimit(FRAMERATE);
+	soundControl = new SoundControl();
 }
 
 Manager::~Manager(){
 	this->window.close();
+	if(soundControl){
+		delete soundControl;
+	}
 }
 
 void Manager::run() {
   sf::Event event;
   while (this->isRunning) {
+		if(this->soundControl->isPlaying()){
+			this->soundControl->playSound();
+		}
     while (this->window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
 				// Call sound control and stop sound
@@ -23,6 +30,12 @@ void Manager::run() {
 			}
 			else if(event.type == sf::Event::MouseButtonPressed){
 				this->handleMouseClick(sf::Mouse::getPosition(this->window));
+				if(this->soundControl->isPlaying()){
+					this->soundControl->stop();
+				}
+				else{
+					this->soundControl->start();
+				}
 			}
     };
     this->draw();
@@ -35,7 +48,9 @@ void Manager::handleMouseClick(sf::Vector2i mousePos){
 	// 	Either handle mouse click:
 	// 	- Directly control over [soundControl] object
 	//	- [Prefered] Return a value/object and let manager modify soundControl
+	//	??? Return pointer to a new [soundControl] object
 	customTraining.handleMouseClick(mousePos);
+
 }
 
 void Manager::draw(){

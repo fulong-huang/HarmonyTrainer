@@ -1,3 +1,4 @@
+#pragma once
 #include "SFML/Graphics.hpp"
 #include <iostream>
 #include <chrono>
@@ -12,17 +13,19 @@ public:
 
 	void start();
 	void stop();
+	void playSound();
+	bool isPlaying();
+
 
 private:
   SoundControl(const SoundControl &m);
   SoundControl operator=(const SoundControl &m);
 
+	bool playing;
+
   Notes note1;
   Notes note2;
 	Notes note3;
-
-	bool isPlaying;
-
 
 	// Sound
 	std::chrono::steady_clock::time_point begin;
@@ -31,7 +34,6 @@ private:
 	float waitTime;
 	int phase;
 
-	void soundControl();
 	void generateRandomNote();
 };
 
