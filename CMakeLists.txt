@@ -26,10 +26,12 @@ find_package(SFML ${SFML_VERSION} COMPONENTS system window graphics audio)
 
 include_directories(
 	include
-	include/display/
+	include/sound
+	include/display
 	include/display/pages
 	include/display/components
 	src
+	src/sound
 	src/display
 	src/display/pages
 	src/display/components
@@ -46,7 +48,9 @@ add_executable(${PROJECT_NAME}
 	src/display/components/text.cpp
 	src/display/components/option.cpp
 
-	src/notes.cpp
+	src/sound/notes.cpp
+	src/sound/soundControl.cpp
+
 	src/manager.cpp
 	)
 

@@ -3,7 +3,7 @@
 #include <chrono>
 #include <ctime>
 
-#include "notes.h"
+#include "soundControl.h"
 #include "menu.h"
 #include "customTraining.h"
 
@@ -32,22 +32,6 @@ private:
 	// Display: 
 	int width, height;
 
-  Notes note1;
-  Notes note2;
-	Notes note3;
-
 	bool isRunning; 
-	bool isPlaying;
 
-
-	// Sound
-	std::chrono::steady_clock::time_point begin;
-	std::chrono::steady_clock::time_point current;
-
-	float waitTime;
-	int phase;
-
-
-	void soundControl();
-	void generateRandomNote();
 };
