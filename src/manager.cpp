@@ -16,9 +16,7 @@ Manager::~Manager(){
 void Manager::run() {
   sf::Event event;
   while (this->isRunning) {
-		if(this->soundControl.isPlaying()){
-			this->soundControl.playSound();
-		}
+		this->soundControl.playSound();
     while (this->window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
 				// Call sound control and stop sound
@@ -26,12 +24,7 @@ void Manager::run() {
 			}
 			else if(event.type == sf::Event::MouseButtonPressed){
 				this->handleMouseClick(sf::Mouse::getPosition(this->window));
-				if(this->soundControl.isPlaying()){
-					this->soundControl.stop();
-				}
-				else{
-					this->soundControl.start();
-				}
+				this->soundControl.trigger();
 			}
     };
     this->draw();

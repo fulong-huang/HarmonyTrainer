@@ -19,6 +19,14 @@ enum NoteSteps{
 	m7 = 10, M7 = 11
 };
 
+const int majorSteps[] = {
+	2, 2, 1, 2, 2, 2, 1
+};
+
+const int minorSteps[] = {
+	2, 1, 2, 2, 1, 2, 2
+};
+
 class Notes {
 public:
   Notes();

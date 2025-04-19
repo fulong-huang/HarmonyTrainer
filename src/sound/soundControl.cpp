@@ -7,28 +7,52 @@ SoundControl::SoundControl(){
 	// 	to generate different number each time program ran
 	srand(time(NULL));
 
-	waitTime = 2;
+	harmonyDuration = answerWaitTime = newQuestionWaitTime = 2;
+	melodyDuration = 1;
 	phase = 0;
+
+	this->harmonyGaps = {3, 7};
+
 	this->generateRandomNote();
 }
 
 SoundControl::~SoundControl(){
-	this->note1.stop();
-	this->note2.stop();
-	this->note3.stop();
+	this->cleanUpNotes();
+}
+
+void SoundControl::cleanUpNotes(){
+	std::cout << "CLEANING UP NOTES WITH SIZE: " << this->melodyNotes.size() << std::endl;
+	for(Notes* note : this->melodyNotes){
+		note->stop();
+		std::cout << "Delete a note" << std::endl;
+		delete note;
+	}
+	std::cout << "CLEARING NOTE" << std::endl;
+	this->melodyNotes.clear();
+	this->harmonyNotes.clear();
+	std::cout << "RETURNING FROM CLEAN UP" << std::endl;
+}
+
+void SoundControl::trigger(){
+	if(this->playing){
+		this->stop();
+	}
+	else{
+		this->start();
+	}
 }
 
 void SoundControl::start(){
 	this->playing = true;
 	this->begin = std::chrono::steady_clock::now();
-	this->note1.start();
-	this->note2.start();
+	phase = 0;
+	this->currWaitTime = 0;
+	this->noteIndex = 0;
+	// this->currWaitTime = harmonyDuration;
 }
 void SoundControl::stop(){
 	this->playing = false;
-	this->note1.stop();
-	this->note2.stop();
-	this->note3.stop();
+	this->cleanUpNotes();
 }
 
 bool SoundControl::isPlaying(){
@@ -39,34 +63,42 @@ void SoundControl::playSound(){
 		if(this->playing){
 			this->current = std::chrono::steady_clock::now();
 			float timePassed = std::chrono::duration_cast<std::chrono::microseconds>(this->current-this->begin).count()/1000000.0;
-			if(timePassed > this->waitTime){
+			if(timePassed > this->currWaitTime){
 				this->begin = std::chrono::steady_clock::now();
-				this->phase = (this->phase + 1)%6;
 				switch(this->phase){
 					case 0:
-						this->note1.start();
-						this->note2.start();
+						std::cout << "CASE 0 " << std::endl;
+						this->generateRandomNote();
+						std::cout << "GENERATED NOTE" << std::endl;
+						this->harmonyNotes[0]->start();
+						this->harmonyNotes[1]->start();
+						this->currWaitTime = this->harmonyDuration;
+						this->phase = 1;
 						break;
 					case 1:
-						this->note1.stop();
-						this->note2.stop();
+						this->harmonyNotes[0]->stop();
+						this->harmonyNotes[1]->stop();
+						this->currWaitTime = this->answerWaitTime;
+						this->phase = 2;
 						break;
 					case 2:
-						this->waitTime = 0.5;
-						this->note2.start();
+						this->currWaitTime = this->melodyDuration;
+						if(this->noteIndex > 0){
+							this->melodyNotes[this->noteIndex-1]->stop();
+						}
+						if(this->noteIndex < this->melodyNotes.size()){
+							this->melodyNotes[this->noteIndex]->start();
+							this->noteIndex++;
+						}
+						else{
+							this->phase = 3;
+							this->noteIndex = 0;
+						}
 						break;
 					case 3:
-						this->note2.stop();
-						this->note3.start();
-						break;
-					case 4:
-						this->note3.stop();
-						this->note1.start();
-						break;
-					case 5:
-						this->note1.stop();
-						this->waitTime = 2;
-						this->generateRandomNote();
+						this->phase = 0;
+						this->cleanUpNotes();
+						this->currWaitTime = this->newQuestionWaitTime;
 						break;
 				}
 			}
@@ -74,25 +106,31 @@ void SoundControl::playSound(){
 }
 
 void SoundControl::generateRandomNote(){
-	int start = 45; 
-	int end = 70;
-	int randomNoteNumber = start + (std::rand() % (end - start + 1));
-	this->note1.setNote(randomNoteNumber);
-	int rand = std::rand();
-	bool isMajor = rand % 2;
-	std::cout << "RAND: "<< rand << std::endl;
-	this->note2.setNote(randomNoteNumber - isMajor - 3);
-	this->note3.setNote(randomNoteNumber - 1 - isMajor);
-	std::cout << "IS MAJOR: " << (isMajor? "True": "False") << std::endl;
+	int start = 36; 
+	int end = 60;
+	int currNoteNumber = start + (std::rand() % (end - start + 1));
+	bool isFirstHarmony = std::rand() % 2;
+	int lastNote = currNoteNumber + harmonyGaps[isFirstHarmony];
+
+	// TODO:
+	// 	!!!!!!!!!!!!!!!!!!!!!!!
+	// 	REUSE NOTE OBJECTS DURING EACH NOTE GENERATION
+	// 	!!!!!!!!!!!!!!!!!!!!!!!
+	Notes* currNote = new Notes(currNoteNumber);
+	this->harmonyNotes.push_back(currNote);
+	this->melodyNotes.push_back(currNote);
+	for(int i = 0; i < 7; i++){
+		currNoteNumber += majorSteps[i];
+		if(currNoteNumber >= lastNote){
+			break;
+		}
+		currNote = new Notes(currNoteNumber);
+		this->melodyNotes.push_back(currNote);
+	}
+	currNote = new Notes(lastNote);
+	this->harmonyNotes.push_back(currNote);
+	this->melodyNotes.push_back(currNote);
 
 	return;
-// 	int start = 36; 
-// 	int end = 60;
-// 	int randomNoteNumber = start + (std::rand() % (end - start + 1));
-// 	this->note1.setNote(randomNoteNumber);
-// 	bool isMajor = std::rand() % 2;
-// 	this->note2.setNote(randomNoteNumber + isMajor + 3);
-// 	this->note3.setNote(randomNoteNumber + !isMajor + 3);
-// 	std::cout << "IS MAJOR: " << (isMajor? "True": "False") << std::endl;
 }
 

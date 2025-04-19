@@ -11,9 +11,11 @@ public:
   SoundControl();
   ~SoundControl();
 
+	void trigger();
+	void playSound();
+
 	void start();
 	void stop();
-	void playSound();
 	bool isPlaying();
 
 
@@ -23,18 +25,20 @@ private:
 
 	bool playing;
 
-  Notes note1;
-  Notes note2;
-	Notes note3;
-
-	// Sound
 	std::chrono::steady_clock::time_point begin;
 	std::chrono::steady_clock::time_point current;
 
-	float waitTime;
-	int phase;
+	std::vector<Notes*> harmonyNotes;
+	std::vector<Notes*> melodyNotes;
+
+	std::vector<int> harmonyGaps;
+
+	float harmonyDuration, answerWaitTime, melodyDuration, newQuestionWaitTime;
+	int phase, noteIndex;
+	int currWaitTime;
 
 	void generateRandomNote();
+	void cleanUpNotes();
 };
 
 
