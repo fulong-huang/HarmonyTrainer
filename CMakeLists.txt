@@ -40,13 +40,16 @@ include_directories(
 add_executable(${PROJECT_NAME}
 	main.cpp
 
-	src/display/pages/menu.cpp
-	src/display/pages/customTraining.cpp
 	src/display/components/customTrainingItem.cpp
 	src/display/components/rectangle.cpp
 	src/display/components/circle.cpp
 	src/display/components/text.cpp
 	src/display/components/option.cpp
+
+	src/display/pages/menu.cpp
+	src/display/pages/customTrainingContent.cpp
+	src/display/pages/customTrainingSetting.cpp
+	src/display/pages/customTraining.cpp
 
 	src/sound/notes.cpp
 	src/sound/soundControl.cpp

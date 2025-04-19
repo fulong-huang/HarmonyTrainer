@@ -27,7 +27,7 @@ private:
   void handleMouseClick(sf::Vector2i mousePos);
 
 	CustomTraining customTraining;
-	SoundControl* soundControl;
+	SoundControl soundControl;
 
 
 	// Display: 

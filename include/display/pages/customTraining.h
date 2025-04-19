@@ -4,6 +4,9 @@
 #include "circle.h"
 #include "text.h"
 #include "customTrainingItem.h"
+#include "customTrainingSetting.h"
+#include "customTrainingContent.h"
+#include "soundControl.h"
 
 class CustomTraining {
 public:
@@ -19,17 +22,24 @@ public:
 
 	void draw(sf::RenderWindow *window);
 
-	void handleMouseClick(sf::Vector2i mousePos);
+	void handleMouseClick(SoundControl* soundControl, sf::Vector2i mousePos);
 
 private:
   CustomTraining(const CustomTraining &d);
   CustomTraining operator=(const CustomTraining &d);
 
+	enum Page{
+		LIST, SETTING, CONTENT,
+	};
+
 	std::vector<CustomTrainingItem*> items;
+	CustomTrainingSetting customTrainingSetting;
+	CustomTrainingContent customTrainingContent;
 
 	sf::Vector2i margin;
 	int width, height, gap;
 
+	Page currentPage;
   void setup();
 
 };

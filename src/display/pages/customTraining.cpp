@@ -13,6 +13,7 @@ CustomTraining::~CustomTraining(){
 };
 
 void CustomTraining::setup(){
+	this->currentPage = Page::LIST;
 	gap = 150;
 
 
@@ -25,23 +26,56 @@ void CustomTraining::setup(){
 };
 
 void CustomTraining::draw(sf::RenderWindow *window){
-	for(CustomTrainingItem* item : items){
-		item->draw(window);
-	}
-
+	switch(this->currentPage){
+		case LIST:
+			for(CustomTrainingItem* item : items){
+				item->draw(window);
+			}
+			break;
+		case SETTING:
+			this->customTrainingSetting.draw(window);
+			break;
+		case CONTENT:
+			this->customTrainingContent.draw(window);
+			break;
+		default:
+			std::cout << "unknown page" << std::endl;
+			break;
+	};
 }
 
-void CustomTraining::handleMouseClick(sf::Vector2i mousePos){
-	for(CustomTrainingItem* item : this->items){
-		int status = item->handleMouseClick(mousePos);
-		if(status == 1){
-			std::cout << "Starting custom training " << item->getTitle() << std::endl;
+void CustomTraining::handleMouseClick(SoundControl* soundControl, sf::Vector2i mousePos){
+	switch(this->currentPage){
+		case LIST:
+			for(CustomTrainingItem* item : this->items){
+				int status = item->handleMouseClick(mousePos);
+				if(status == 1){
+					this->currentPage = Page::CONTENT;
+					std::cout << "Opening custom training Content" << item->getTitle() << std::endl;
+					break;
+				}
+				else if(status == 2){
+					this->currentPage = Page::SETTING;
+					std::cout << "Opening custom training Setting" << item->getTitle() << std::endl;
+					break;
+				}
+			}
 			break;
-		}
-		else if(status == 2){
-			std::cout << "Opening option of " << item->getTitle() << std::endl;
+		case SETTING:
+			this->currentPage = Page::LIST;
+			std::cout << "CLOSING SETTING" << std::endl;
+			std::cout << "RETURN TO LIST IEW" << std::endl;
 			break;
-		}
+		case CONTENT:
+			std::cout << "CLOSING CONTENT" << std::endl;
+			this->currentPage = Page::LIST;
+			std::cout << "RETURN TO LIST IEW" << std::endl;
+			break;
+		default:
+			std::cout << "unknown page" << std::endl;
+			this->currentPage = Page::LIST;
+			std::cout << "RETURN TO LIST IEW" << std::endl;
+			break;
 	}
 }
 
