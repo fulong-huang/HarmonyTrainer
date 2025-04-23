@@ -3,10 +3,10 @@
 #include <iostream>
 
 Text::Text(sf::Color color, sf::Vector2i pos, std::string str, int fontSize,
-           bool centered, bool transparent, std::string fontName,
-           sf::Uint32 style)
+           bool centered, bool transparent, sf::Uint32 style,
+					 int maxWidth)
     : color(color), pos(pos), str(str), fontSize(fontSize), style(style),
-      transparent(transparent), centered(centered) {
+      transparent(transparent), centered(centered), maxWidth(maxWidth) {
   this->setup();
 };
 
@@ -19,7 +19,6 @@ Text::Text(const Text &t) {
   this->pos = t.pos;
   this->style = t.style;
   this->str = t.str;
-  this->fontName = t.fontName;
   this->fontSize = t.fontSize;
   this->transparent = t.transparent;
   this->centered = t.centered;
@@ -33,7 +32,6 @@ Text Text::operator=(const Text &t) {
   this->style = t.style;
   this->str = t.str;
   this->transparent = t.transparent;
-  this->fontName = t.fontName;
   this->fontSize = t.fontSize;
 
   this->setup();
@@ -47,15 +45,15 @@ void Text::setup() {
     std::cout << "Font " << fontName << " Failed to Load" << std::endl;
     return;
   };
+  this->setString(this->str);
   this->text.setFont(this->font);
-  this->text.setString(this->str);
   this->text.setCharacterSize(this->fontSize);
   if (this->transparent) {
     this->text.setFillColor(sf::Color::Transparent);
   } else {
     this->text.setFillColor(this->color);
   };
-  this->text.setStyle(style);
+  this->text.setStyle(this->style);
 	this->text.setOrigin({this->text.getLocalBounds().left, this->text.getLocalBounds().top});
   if (centered) {
 		sf::FloatRect globBound = this->text.getGlobalBounds();
@@ -66,6 +64,81 @@ void Text::setup() {
     this->text.setPosition(this->pos.x, this->pos.y);
   };
 };
+
+void Text::setString(std::string str){
+	std::string currWord = "";
+	int pos; 
+	// find first word
+	for(pos = 0; pos < str.size(); pos++){
+		if(str[pos] == ' '){
+			pos++;
+			break;
+		}
+		currWord += str[pos];
+	}
+	// if string only contain one word, 
+	// 	set text to that word no matter its in or out of bound
+	if(pos >= str.size()){
+		this->text.setString(this->str);
+		return;
+	}
+
+	// assign first word to current line;
+	std::string currLine = currWord;
+	std::string prevLine = currWord;
+	currWord = "";
+
+
+	sf::Text tempText;
+	tempText.setFont(this->font);
+	tempText.setCharacterSize(this->fontSize);
+	tempText.setStyle(this->style);
+	std::string finalString = "";
+	// traverse through string from the second word 
+	for(char c : str.substr(pos)){
+		if(c == ' '){
+			// Add word to current line
+			currLine += ' ' + currWord;
+
+			// If current string is out of bond, 
+			// 	do not add current word to the line
+			tempText.setString(currLine);
+			if(tempText.getLocalBounds().width > maxWidth){
+				finalString += prevLine + '\n';
+				currLine = currWord;
+				prevLine = currWord;
+			}
+			else{
+				prevLine = currLine;
+			}
+
+			currWord = "";
+		}
+		else{
+			currWord += c;
+		}
+	}
+	
+	// Add final word to the string
+	{
+		// Add word to current line
+		currLine += ' ' + currWord;
+
+		// If current string is out of bond, 
+		// 	do not add current word to the line
+		tempText.setString(currLine);
+		if(tempText.getLocalBounds().width > maxWidth){
+			finalString += prevLine + '\n' + currWord;
+		}
+		else{
+			finalString += currLine;
+		}
+
+	}
+	std::cout << "FINAL STRING: _" << finalString << "-" << std::endl;
+
+  this->text.setString(finalString);
+}
 
 void Text::draw(sf::RenderWindow *window){
 	window->draw(this->text);

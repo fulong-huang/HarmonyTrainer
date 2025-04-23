@@ -26,6 +26,14 @@ void Manager::run() {
 				this->handleMouseClick(sf::Mouse::getPosition(this->window));
 				this->soundControl.trigger();
 			}
+			else if(event.type == sf::Event::KeyPressed){
+				if(event.key.code == sf::Keyboard::Down){
+					this->customTraining.scroll(-10);
+				}
+				else if(event.key.code == sf::Keyboard::Up){
+					this->customTraining.scroll(10);
+				}
+			}
     };
     this->draw();
   };

@@ -4,7 +4,8 @@
 class Text : public Shape{
 public:
 	Text(sf::Color color, sf::Vector2i pos, std::string str, int fontSize = 50,
-			bool centered=true,bool transparent = false, std::string fontName = "NONE", sf::Uint32 style = 0);
+			bool centered=true,bool transparent = false, sf::Uint32 style = 0,
+			int maxWidth = 700);
 	~Text() override;
 	Text(const Text& t);
 	Text operator=(const Text& t);
@@ -19,6 +20,8 @@ public:
 	sf::Color getColor() override;
 	sf::Vector2i getPosition() override;
 	sf::Vector2i getSize() override;
+
+	void setString(std::string str);
 
 	bool boundCheck(sf::Vector2i pos) override;
 	
@@ -37,6 +40,7 @@ private:
 	std::string str;
 	std::string fontName;
 	int fontSize;
+	int maxWidth;
 	bool transparent;
 	bool centered;
 

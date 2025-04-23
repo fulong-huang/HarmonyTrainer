@@ -13,6 +13,9 @@ public:
 
 	void handleMouseClick(sf::Vector2i mousePos);
 
+	void scroll(int amount);
+
+
 private:
   CustomTrainingSetting(const CustomTrainingSetting &d);
   CustomTrainingSetting operator=(const CustomTrainingSetting &d);
@@ -23,6 +26,9 @@ private:
 	sf::Vector2i margin;
 
 	Text* trainingSettingText;
+
+	int scrollPosition; 
+
 
 };
 
