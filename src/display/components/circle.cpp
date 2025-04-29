@@ -2,7 +2,8 @@
 #include <cmath>
 #include <iostream>
 
-Circle::Circle(sf::Color color, sf::Vector2i pos, int radius, bool transparent):
+Circle::Circle(sf::Color color, sf::Vector2i pos, int radius,
+		bool centered, bool transparent):
 	color(color), radius(radius), pos(pos), transparent(transparent)
 {
 	this->shape.setRadius(this->radius);
@@ -12,7 +13,13 @@ Circle::Circle(sf::Color color, sf::Vector2i pos, int radius, bool transparent):
 	else{
 		this->shape.setFillColor(this->color);
 	};
-	this->shape.setPosition(this->pos.x, this->pos.y);
+  if (centered) {
+    float width = this->shape.getLocalBounds().width;
+    float height = this->shape.getLocalBounds().height;
+		this->shape.setPosition(this->pos.x - width / 2, this->pos.y - height / 2);
+  } else {
+		this->shape.setPosition(this->pos.x, this->pos.y);
+  };
 };
 
 Circle::~Circle(){

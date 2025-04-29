@@ -3,10 +3,12 @@
 #include <iostream>
 
 Text::Text(sf::Color color, sf::Vector2i pos, std::string str, int fontSize,
-           bool centered, bool transparent, sf::Uint32 style,
+           bool centered, bool verticalCentered, bool transparent, sf::Uint32 style,
 					 int maxWidth)
     : color(color), pos(pos), str(str), fontSize(fontSize), style(style),
-      transparent(transparent), centered(centered), maxWidth(maxWidth) {
+      transparent(transparent), 
+			centered(centered), verticalCentered(verticalCentered),
+			maxWidth(maxWidth) {
   this->setup();
 };
 
@@ -55,14 +57,7 @@ void Text::setup() {
   };
   this->text.setStyle(this->style);
 	this->text.setOrigin({this->text.getLocalBounds().left, this->text.getLocalBounds().top});
-  if (centered) {
-		sf::FloatRect globBound = this->text.getGlobalBounds();
-    float width = globBound.width;
-    float height = globBound.height;
-    this->text.setPosition(this->pos.x - width / 2, this->pos.y - height / 2);
-  } else {
-    this->text.setPosition(this->pos.x, this->pos.y);
-  };
+	this->recenter();
 };
 
 void Text::setString(std::string str){
@@ -191,10 +186,15 @@ void Text::setText(std::string str) {
 }
 
 void Text::recenter() {
-  if (centered) {
+  if (this->centered) {
     float width = this->text.getLocalBounds().width;
     float height = this->text.getLocalBounds().height;
-    this->text.setPosition(this->pos.x - width / 2, this->pos.y - height / 2);
+		if(this->verticalCentered){
+			this->text.setPosition(this->pos.x - width / 2, this->pos.y - height / 2);
+		}
+		else{
+			this->text.setPosition(this->pos.x - width / 2, this->pos.y);
+		}
   } else {
     this->text.setPosition(this->pos.x, this->pos.y);
   };

@@ -5,7 +5,8 @@
 
 class Circle : public Shape{
 public:
-	Circle(sf::Color color, sf::Vector2i pos, int radius, bool transparent = false);
+	Circle(sf::Color color, sf::Vector2i pos, int radius,
+			bool centered = false, bool transparent = false);
 	~Circle();
 	Circle(const Circle& c);
 	Circle operator=(const Circle& c);

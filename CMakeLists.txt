@@ -40,6 +40,7 @@ include_directories(
 add_executable(${PROJECT_NAME}
 	main.cpp
 
+	src/display/components/chordSelection.cpp
 	src/display/components/customTrainingItem.cpp
 	src/display/components/rectangle.cpp
 	src/display/components/circle.cpp

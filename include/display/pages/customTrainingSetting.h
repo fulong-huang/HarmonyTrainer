@@ -3,10 +3,11 @@
 #include "rectangle.h"
 #include "circle.h"
 #include "text.h"
+#include "chordSelection.h"
 
 class CustomTrainingSetting {
 public:
-  CustomTrainingSetting(int width=0, sf::Vector2i margin={100, 300});
+  CustomTrainingSetting(int width=800);
   ~CustomTrainingSetting();
 	
 	void draw(sf::RenderWindow *window);
@@ -22,8 +23,10 @@ private:
 
   void setup();
 
+	ChordSelection chordsSetting;
+
 	int width;
-	sf::Vector2i margin;
+	int margin = 100;
 
 	Text* trainingSettingText;
 

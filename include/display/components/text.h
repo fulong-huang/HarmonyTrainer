@@ -4,7 +4,7 @@
 class Text : public Shape{
 public:
 	Text(sf::Color color, sf::Vector2i pos, std::string str, int fontSize = 50,
-			bool centered=true,bool transparent = false, sf::Uint32 style = 0,
+			bool centered=false, bool verticalCentered=false, bool transparent = false, sf::Uint32 style = 0,
 			int maxWidth = 700);
 	~Text() override;
 	Text(const Text& t);
@@ -42,7 +42,7 @@ private:
 	int fontSize;
 	int maxWidth;
 	bool transparent;
-	bool centered;
+	bool centered, verticalCentered;
 
 };
 
