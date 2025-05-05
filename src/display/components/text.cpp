@@ -1,6 +1,17 @@
 #include "text.h"
-#include <filesystem>
-#include <iostream>
+// Setup and load font
+sf::Font FONT = []{
+	sf::Font font;
+	std::cout << "LOADING FONT = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = " << std::endl;
+	std::string srcDir = std::__fs::filesystem::path(__FILE__).parent_path();
+	srcDir += "/../../../resources/";
+	if (!font.loadFromFile(srcDir + "roboto/Roboto-Black.ttf")) {
+		std::cerr << "Failed to load font" << std::endl;
+		return font;
+	};
+	return font;
+}();
+
 
 Text::Text(sf::Color color, sf::Vector2i pos, std::string str, int fontSize,
            bool centered, bool verticalCentered, bool transparent, sf::Uint32 style,
@@ -41,15 +52,8 @@ Text Text::operator=(const Text &t) {
 };
 
 void Text::setup() {
-	// TODO: Set front only once
-  std::string srcDir = std::__fs::filesystem::path(__FILE__).parent_path();
-  srcDir += "/../../../resources/";
-  if (!this->font.loadFromFile(srcDir + "roboto/Roboto-Black.ttf")) {
-    std::cout << "Font " << fontName << " Failed to Load" << std::endl;
-    return;
-  };
   this->setString(this->str);
-  this->text.setFont(this->font);
+  this->text.setFont(FONT);
   this->text.setCharacterSize(this->fontSize);
   if (this->transparent) {
     this->text.setFillColor(sf::Color::Transparent);
@@ -86,7 +90,7 @@ void Text::setString(std::string str){
 
 
 	sf::Text tempText;
-	tempText.setFont(this->font);
+	tempText.setFont(FONT);
 	tempText.setCharacterSize(this->fontSize);
 	tempText.setStyle(this->style);
 	std::string finalString = "";

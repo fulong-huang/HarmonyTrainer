@@ -1,4 +1,6 @@
 #pragma once
+#include <filesystem>
+#include <iostream>
 #include "shape.h"
 
 class Text : public Shape{
@@ -33,12 +35,10 @@ private:
 	void setup();
 	
 	sf::Text text;
-	sf::Font font;
 	sf::Color color;
 	sf::Vector2i pos;
 	sf::Uint32 style;
 	std::string str;
-	std::string fontName;
 	int fontSize;
 	int maxWidth;
 	bool transparent;
