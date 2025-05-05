@@ -31,6 +31,7 @@ void CustomTrainingSetting::scroll(int amount){
 	this->trainingSettingText->setPosition(
 			{this->width/2, this->margin + this->scrollPosition}
 			);
+	this->chordsSetting.scroll(amount);
 }
 
 

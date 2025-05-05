@@ -12,6 +12,13 @@ public:
 
 	void draw(sf::RenderWindow *window);
 	void setPosition(sf::Vector2i position);
+	void scroll(int amount);
+
+	void resetScroll(){
+		this->scrollPosition = 0;
+		this->background->setPosition(position);
+		this->text->setPosition(position);
+	}
 	
 
 	// Not needed? size is part of the input during construction;
@@ -24,6 +31,9 @@ private:
 
 	Circle *background;
 	Text *text;
+
+	int scrollPosition = 0;
+	sf::Vector2i position;
 
 
 };
@@ -43,7 +53,6 @@ public:
 	void createTraining();
 	void setStartPosition(int startHeight);
 	
-	// TODO: 
 	void scroll(int amount);
 	void resetScroll();
 
@@ -60,12 +69,13 @@ private:
   void setup();
 
 	int startHeight = 300;
-	int scrollPos = 0;
+	int scrollPosition = 0;
 	int maxWidth = 800;
 	int margin = 60;
 	int padding = 50;
 
 	std::vector<ChordSelectionItem*> selections;
+
 
 };
 
