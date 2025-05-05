@@ -4,7 +4,7 @@
 
 Circle::Circle(sf::Color color, sf::Vector2i pos, int radius,
 		bool centered, bool transparent):
-	color(color), radius(radius), pos(pos), transparent(transparent)
+	color(color), radius(radius), pos(pos), transparent(transparent), centered(centered)
 {
 	this->shape.setRadius(this->radius);
 	if(this->transparent){
@@ -13,7 +13,7 @@ Circle::Circle(sf::Color color, sf::Vector2i pos, int radius,
 	else{
 		this->shape.setFillColor(this->color);
 	};
-  if (centered) {
+  if (this->centered) {
     float width = this->shape.getLocalBounds().width;
     float height = this->shape.getLocalBounds().height;
 		this->shape.setPosition(this->pos.x - width / 2, this->pos.y - height / 2);
@@ -67,7 +67,13 @@ void Circle::setColor(sf::Color color){
 
 void Circle::setPosition(sf::Vector2i pos) {
 	this->pos = pos;
-	this->shape.setPosition(this->pos.x, this->pos.y);
+  if (this->centered) {
+    float width = this->shape.getLocalBounds().width;
+    float height = this->shape.getLocalBounds().height;
+		this->shape.setPosition(this->pos.x - width / 2, this->pos.y - height / 2);
+  } else {
+		this->shape.setPosition(this->pos.x, this->pos.y);
+  };
 };
 
 void Circle::setSize(int r, int c){

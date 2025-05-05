@@ -1,3 +1,4 @@
+#pragma once
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include <map>
@@ -19,11 +20,21 @@ enum NoteSteps{
 	m7 = 10, M7 = 11
 };
 
-const int majorSteps[] = {
+const std::string NoteStepNames[] = {
+	"m2", "M2", 
+	"m3", "M3", 
+	"P4", "A4", 
+	"P5", "A5", 
+	"m6", "M6", 
+	"m7", "M7", 
+	"P8",
+};
+
+const int MajorSteps[] = {
 	2, 2, 1, 2, 2, 2, 1
 };
 
-const int minorSteps[] = {
+const int MinorSteps[] = {
 	2, 1, 2, 2, 1, 2, 2
 };
 

@@ -41,9 +41,10 @@ Text Text::operator=(const Text &t) {
 };
 
 void Text::setup() {
+	// TODO: Set front only once
   std::string srcDir = std::__fs::filesystem::path(__FILE__).parent_path();
   srcDir += "/../../../resources/";
-  if (!this->font.loadFromFile(srcDir + "Silkscreen/slkscr.ttf")) {
+  if (!this->font.loadFromFile(srcDir + "roboto/Roboto-Black.ttf")) {
     std::cout << "Font " << fontName << " Failed to Load" << std::endl;
     return;
   };
@@ -151,6 +152,7 @@ void Text::setColor(sf::Color color) {
 void Text::setPosition(sf::Vector2i pos) {
   this->pos = pos;
   this->text.setPosition(this->pos.x, this->pos.y);
+	this->recenter();
 };
 
 void Text::setTransparency(bool transparent) {

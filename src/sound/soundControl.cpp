@@ -120,7 +120,7 @@ void SoundControl::generateRandomNote(){
 	this->harmonyNotes.push_back(currNote);
 	this->melodyNotes.push_back(currNote);
 	for(int i = 0; i < 7; i++){
-		currNoteNumber += majorSteps[i];
+		currNoteNumber += MajorSteps[i];
 		if(currNoteNumber >= lastNote){
 			break;
 		}

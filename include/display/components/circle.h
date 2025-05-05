@@ -26,7 +26,7 @@ private:
 	sf::CircleShape shape;
 	sf::Color color;
 	sf::Vector2i pos;
-	bool transparent;
+	bool transparent, centered;
 	int radius;
 
 };

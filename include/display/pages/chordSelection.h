@@ -3,17 +3,24 @@
 #include "rectangle.h"
 #include "circle.h"
 #include "text.h"
+#include "notes.h"
 
-class SelectionDisplay{
+class ChordSelectionItem{
 public:
-	SelectionDisplay(sf::Vector2i position);
-	~SelectionDisplay();
+	ChordSelectionItem(sf::Vector2i position, std::string name);
+	~ChordSelectionItem();
 
 	void draw(sf::RenderWindow *window);
+	void setPosition(sf::Vector2i position);
+	
+
+	// Not needed? size is part of the input during construction;
+	sf::Vector2i getSize();
+
 
 private:
-  SelectionDisplay(const SelectionDisplay &s);
-  SelectionDisplay operator=(const SelectionDisplay &s);
+  ChordSelectionItem(const ChordSelectionItem &s);
+  ChordSelectionItem operator=(const ChordSelectionItem &s);
 
 	Circle *background;
 	Text *text;
@@ -23,15 +30,23 @@ private:
 
 class ChordSelection {
 public:
-	// width for width of screen
-	// position for height of scroll
-	// margin for spaces(margin) on both side
+	// TODO: Add the following items 
+	// 	width for width of screen
+	// 	height for starting Y position
+	// 	margin for spaces(margin) on both side
+	// 	(Optional) circle size
   ChordSelection();
   ~ChordSelection();
 	
 	// TODO: 
 	// 	Create new custom training
 	void createTraining();
+	void setStartPosition(int startHeight);
+	
+	// TODO: 
+	void scroll(int amount);
+	void resetScroll();
+
 
 	void draw(sf::RenderWindow *window);
 
@@ -44,10 +59,13 @@ private:
 
   void setup();
 
-	int startPos = 300;
+	int startHeight = 300;
 	int scrollPos = 0;
+	int maxWidth = 800;
+	int margin = 60;
+	int padding = 50;
 
-	std::vector<SelectionDisplay*> selections;
+	std::vector<ChordSelectionItem*> selections;
 
 };
 
