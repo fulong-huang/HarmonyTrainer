@@ -26,12 +26,20 @@ void Manager::run() {
 				this->handleMouseClick(sf::Mouse::getPosition(this->window));
 				this->soundControl.trigger();
 			}
-			else if(event.type == sf::Event::KeyPressed){
-				if(event.key.code == sf::Keyboard::Down){
-					this->customTraining.scroll(-10);
-				}
-				else if(event.key.code == sf::Keyboard::Up){
-					this->customTraining.scroll(10);
+// 			else if(event.type == sf::Event::KeyPressed){
+// 				if(event.key.code == sf::Keyboard::Down){
+// 					this->customTraining.scroll(-10);
+// 				}
+// 				else if(event.key.code == sf::Keyboard::Up){
+// 					this->customTraining.scroll(10);
+// 				}
+// 			}
+			else if(event.type == sf::Event::MouseWheelScrolled){
+				float delta = event.mouseWheelScroll.delta;
+				if(delta != 0){
+					std::cout << "DELTA: " << delta << std::endl;
+					std::cout << (delta > 0? "UP" : "DOWN") << std::endl;
+					this->customTraining.scroll(delta * 10);
 				}
 			}
     };

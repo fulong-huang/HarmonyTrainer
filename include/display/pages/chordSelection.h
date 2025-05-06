@@ -14,11 +14,7 @@ public:
 	void setPosition(sf::Vector2i position);
 	void scroll(int amount);
 
-	void resetScroll(){
-		this->scrollPosition = 0;
-		this->background->setPosition(position);
-		this->text->setPosition(position);
-	}
+	void resetScroll();
 	
 
 	// Not needed? size is part of the input during construction;

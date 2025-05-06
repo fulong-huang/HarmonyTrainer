@@ -24,11 +24,8 @@ public:
 
 	void handleMouseClick(SoundControl* soundControl, sf::Vector2i mousePos);
 
-	void scroll(int amount){
-		if(this->currentPage == Page::SETTING){
-			this->customTrainingSetting.scroll(amount);
-		}
-	}
+	void scroll(int amount);
+	void resetScroll();
 
 private:
   CustomTraining(const CustomTraining &d);

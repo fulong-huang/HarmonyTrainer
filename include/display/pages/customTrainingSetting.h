@@ -15,6 +15,7 @@ public:
 	void handleMouseClick(sf::Vector2i mousePos);
 
 	void scroll(int amount);
+	void resetScroll();
 
 
 private:

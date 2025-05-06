@@ -63,6 +63,7 @@ void CustomTraining::handleMouseClick(SoundControl* soundControl, sf::Vector2i m
 			break;
 		case SETTING:
 			this->currentPage = Page::LIST;
+			this->customTrainingSetting.resetScroll();
 			std::cout << "CLOSING SETTING" << std::endl;
 			std::cout << "RETURN TO LIST IEW" << std::endl;
 			break;
@@ -77,6 +78,16 @@ void CustomTraining::handleMouseClick(SoundControl* soundControl, sf::Vector2i m
 			std::cout << "RETURN TO LIST IEW" << std::endl;
 			break;
 	}
+}
+
+void CustomTraining::scroll(int amount){
+	if(this->currentPage == Page::SETTING){
+		this->customTrainingSetting.scroll(amount);
+	}
+}
+
+void CustomTraining::resetScroll(){
+	this->customTrainingSetting.resetScroll();
 }
 
 
