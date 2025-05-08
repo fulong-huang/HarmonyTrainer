@@ -5,11 +5,17 @@
 #include <ctime>
 
 #include "notes.h"
+#include "noteGenerator.h"
+
+// TODO: Remove it after generator assignment called from outside
+#include "noteGenBySteps.h"
 
 class SoundControl {
 public:
   SoundControl();
   ~SoundControl();
+
+	void setNoteGenerator(NoteGenerator *noteGenerator);
 
 	void trigger();
 	void playSound();
@@ -22,6 +28,8 @@ public:
 private:
   SoundControl(const SoundControl &m);
   SoundControl operator=(const SoundControl &m);
+
+	NoteGenerator *noteGenerator = NULL;
 
 	bool playing;
 
@@ -37,7 +45,6 @@ private:
 	int phase, noteIndex;
 	int currWaitTime;
 
-	void generateRandomNote();
 	void cleanUpNotes();
 };
 
