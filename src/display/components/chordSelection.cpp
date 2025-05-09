@@ -33,17 +33,12 @@ void ChordSelectionItem::setPosition(sf::Vector2i position){
 }
 
 void ChordSelectionItem::scroll(int amount){
-	this->scrollPosition += amount;
-	if(this->scrollPosition > 0){
-		this->scrollPosition = 0;
-	}
-	this->background->setPosition({this->position.x, this->position.y + scrollPosition});
-	this->text->setPosition({this->position.x, this->position.y + scrollPosition});
+	this->background->scroll(amount);
+	this->text->scroll(amount);
 }
 void ChordSelectionItem::resetScroll(){
-	this->scrollPosition = 0;
-	this->background->setPosition(this->position);
-	this->text->setPosition(this->position);
+	this->background->resetScroll();
+	this->text->resetScroll();
 }
 	
 
@@ -83,17 +78,12 @@ void ChordSelection::draw(sf::RenderWindow *window){
 }
 
 void ChordSelection::scroll(int amount){
-	this->scrollPosition += amount;
-	if(this->scrollPosition > 0){
-		this->scrollPosition = 0;
-	}
 	for(ChordSelectionItem* item : selections){
 		item->scroll(amount);
 	}
 }
 
 void ChordSelection::resetScroll(){
-	this->scrollPosition = 0;
 	for(ChordSelectionItem* item: selections){
 		item->resetScroll();
 	}

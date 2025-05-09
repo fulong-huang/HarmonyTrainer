@@ -11,8 +11,6 @@ public:
   virtual void generateRandomNote(std::vector<Notes *> &harmonyNotes,
                                   std::vector<Notes *> &melodyNotes,
                                   std::vector<int> harmonyGaps,
-                                  int lowerBound = 36, int upperBound = 60) {
-		std::cout << "BASE" << std::endl;
-	};
+                                  int lowerBound = 36, int upperBound = 60) = 0;
 
 };

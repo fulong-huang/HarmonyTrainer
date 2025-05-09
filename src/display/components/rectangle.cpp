@@ -17,7 +17,7 @@ Rectangle::Rectangle(sf::Color color, sf::Vector2i pos, int width, int height,
 			this->shape.setOutlineColor(this->outlineColor);
 		}
 	};
-	this->shape.setPosition(this->pos.x, this->pos.y);
+	this->setPosition({this->pos.x, this->pos.y});
 };
 
 Rectangle::~Rectangle(){
@@ -34,7 +34,7 @@ Rectangle::Rectangle(const Rectangle& c):
 	else{
 		this->shape.setFillColor(this->color);
 	};
-	this->shape.setPosition(this->pos.x, this->pos.y);
+	this->setPosition({this->pos.x, this->pos.y});
 };
 
 Rectangle Rectangle::operator=(const Rectangle
@@ -51,7 +51,7 @@ Rectangle Rectangle::operator=(const Rectangle
 	else{
 		this->shape.setFillColor(this->color);
 	};
-	this->shape.setPosition(this->pos.x, this->pos.y);
+	this->setPosition({this->pos.x, this->pos.y});
 	return *this;
 };
 
@@ -66,6 +66,7 @@ void Rectangle::setColor(sf::Color color){
 };
 
 void Rectangle::setPosition(sf::Vector2i pos) {
+	this->scrollPosition = 0;
 	this->pos = pos;
 	this->shape.setPosition(this->pos.x, this->pos.y);
 };
@@ -105,5 +106,18 @@ bool Rectangle::boundCheck(sf::Vector2i pos) {
 		this->pos.y + this->height >= pos.y;
 	return inBound;
 };
+
+void Rectangle::scroll(int amount){
+	this->scrollPosition += amount;
+	if(this->scrollPosition > 0){
+		this->scrollPosition = 0;
+	}
+	this->shape.setPosition(this->pos.x, this->pos.y + this->scrollPosition);
+}
+
+void Rectangle::resetScroll(){
+	this->scrollPosition = 0;
+	this->shape.setPosition(this->pos.x, this->pos.y);
+}
 
 

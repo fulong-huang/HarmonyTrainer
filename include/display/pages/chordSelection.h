@@ -65,7 +65,6 @@ private:
   void setup();
 
 	int startHeight = 300;
-	int scrollPosition = 0;
 	int maxWidth = 800;
 	int margin = 60;
 	int padding = 50;

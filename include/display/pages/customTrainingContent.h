@@ -11,6 +11,9 @@ public:
 	
 	void draw(sf::RenderWindow *window);
 
+	void scroll(int amount);
+	void resetScroll();
+
 	void handleMouseClick(sf::Vector2i mousePos);
 
 private:

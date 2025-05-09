@@ -10,13 +10,6 @@ Option::Option(sf::Vector2i position, sf::Vector2i dimension, int radius):
 	this->setup();
 }
 
-void Option::draw(sf::RenderWindow *window){
-	background->draw(window);
-	dot1->draw(window);
-	dot2->draw(window);
-	dot3->draw(window);
-}
-
 void Option::setup(){
 	background = new Rectangle(
 			sf::Color(100, 100, 100),
@@ -48,6 +41,27 @@ void Option::setup(){
 
 bool Option::handleMouseClick(sf::Vector2i mousePos){
 	return this->background->boundCheck(mousePos);
+}
+
+void Option::draw(sf::RenderWindow *window){
+	background->draw(window);
+	dot1->draw(window);
+	dot2->draw(window);
+	dot3->draw(window);
+}
+
+void Option::scroll(int amount){
+	this->background->scroll(amount);
+	this->dot1->scroll(amount);
+	this->dot2->scroll(amount);
+	this->dot3->scroll(amount);
+}
+
+void Option::resetScroll(){
+	this->background->resetScroll();
+	this->dot1->resetScroll();
+	this->dot2->resetScroll();
+	this->dot3->resetScroll();
 }
 
 

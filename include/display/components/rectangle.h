@@ -21,6 +21,9 @@ public:
 	sf::Vector2i getSize() override;
 
 	bool boundCheck(sf::Vector2i pos) override;
+
+	void scroll(int amount) override;
+	void resetScroll() override;
 private:
 	sf::RectangleShape shape;
 	sf::Color color;
@@ -31,6 +34,7 @@ private:
 	float outlineThickness;
 	sf::Color outlineColor;
 
+	int scrollPosition;
 };
 
 

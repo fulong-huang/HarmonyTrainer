@@ -11,6 +11,9 @@ public:
   ~CustomTrainingItem();
 
 	void draw(sf::RenderWindow *window);
+	void scroll(int amount);
+
+	void resetScroll();
 
 	// Return status:
 	// 	0: no action / miss click
@@ -29,9 +32,14 @@ private:
 
 	sf::Vector2i startingPosition;
 	sf::Vector2i endingPosition;
-  void setup();
+	sf::Vector2i menuPadding = {20, 30};
 	std::string title;
 	int width;
+	int optionWidth = 50;
+	int optionPadding = 30;
+
+
+  void setup();
 
 	Text* nameDisplay;
 	Rectangle* itemContainer;

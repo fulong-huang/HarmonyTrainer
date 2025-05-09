@@ -11,6 +11,8 @@ class Option{
 		void draw(sf::RenderWindow *window);
 		bool handleMouseClick(sf::Vector2i mousePos);
 	
+		void scroll(int amount);
+		void resetScroll();
 	
 	
 	private:

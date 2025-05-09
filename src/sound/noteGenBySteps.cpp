@@ -11,19 +11,14 @@ void NoteGenBySteps::generateRandomNote(std::vector<Notes *> &harmonyNotes,
                         std::vector<int> harmonyGaps,
 												int lowerBound, int upperBound
 												) {
-	
-	std::cout << "FUNC CALLED: " << std::endl;
 	// TODO:
 	// 	Reuse Notes instead of cleaning them all up
   for (Notes *note : melodyNotes) {
     note->stop();
-    std::cout << "Delete a note" << std::endl;
     delete note;
   }
-	std::cout << "Clearning notes" << std::endl;
   melodyNotes.clear();
   harmonyNotes.clear();
-  std::cout << "RETURNING FROM CLEAN UP" << std::endl;
   int currNoteNumber = lowerBound + (std::rand() % (upperBound - lowerBound + 1));
   bool isFirstHarmony = std::rand() % 2;
   int lastNote = currNoteNumber + harmonyGaps[isFirstHarmony];

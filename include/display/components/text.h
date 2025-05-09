@@ -29,6 +29,9 @@ public:
 	
 	void setText(std::string str);
 	void recenter();
+
+	void scroll(int amount) override;
+	void resetScroll() override;
 	std::string getText();
 private:
 	void findDimensions();
@@ -43,6 +46,8 @@ private:
 	int maxWidth;
 	bool transparent;
 	bool centered, verticalCentered;
+
+	int scrollPosition;
 
 };
 

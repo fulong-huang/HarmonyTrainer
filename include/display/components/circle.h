@@ -22,11 +22,19 @@ public:
 	sf::Vector2i getSize() override;
 
 	bool boundCheck(sf::Vector2i pos) override;
+	void scroll(int amount) override;
+
+	void recenter();
+	void resetScroll() override;
 private:
 	sf::CircleShape shape;
 	sf::Color color;
 	sf::Vector2i pos;
 	bool transparent, centered;
 	int radius;
+
+	int scrollPosition;
+
+	void setup();
 
 };

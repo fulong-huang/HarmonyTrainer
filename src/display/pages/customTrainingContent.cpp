@@ -23,5 +23,12 @@ void CustomTrainingContent::draw(sf::RenderWindow* window){
 	this->trainingContentText->draw(window);
 }
 
+void CustomTrainingContent::scroll(int amount){
+	this->trainingContentText->scroll(amount);
+}
+
+void CustomTrainingContent::resetScroll(){
+	this->trainingContentText->resetScroll();
+}
 
 

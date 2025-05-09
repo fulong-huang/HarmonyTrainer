@@ -22,17 +22,12 @@ SoundControl::~SoundControl() {
 }
 
 void SoundControl::cleanUpNotes() {
-  std::cout << "CLEANING UP NOTES WITH SIZE: " << this->melodyNotes.size()
-            << std::endl;
   for (Notes *note : this->melodyNotes) {
     note->stop();
-    std::cout << "Delete a note" << std::endl;
     delete note;
   }
-  std::cout << "CLEARING NOTE" << std::endl;
   this->melodyNotes.clear();
   this->harmonyNotes.clear();
-  std::cout << "RETURNING FROM CLEAN UP" << std::endl;
 }
 
 void SoundControl::trigger() {
@@ -46,7 +41,6 @@ void SoundControl::trigger() {
 void SoundControl::start() {
 	if(!this->noteGenerator){
 		this->noteGenerator = new NoteGenBySteps();
-		std::cout << "GENREATE -------------------- " << std::endl;
 	}
   this->playing = true;
   this->begin = std::chrono::steady_clock::now();
@@ -72,20 +66,14 @@ void SoundControl::playSound() {
       this->begin = std::chrono::steady_clock::now();
       switch (this->phase) {
       case 0:
-        std::cout << "CASE 0 " << std::endl;
-				std::cout << this->noteGenerator << std::endl;
         this->noteGenerator->generateRandomNote(
 						this->harmonyNotes,
 						this->melodyNotes,
 						this->harmonyGaps
 						);
-        std::cout << "GENERATED NOTE" << std::endl;
         this->harmonyNotes[0]->start();
-        std::cout << "GENERATED NOTE" << std::endl;
         this->harmonyNotes[1]->start();
-        std::cout << "GENERATED NOTE" << std::endl;
         this->currWaitTime = this->harmonyDuration;
-        std::cout << "ADD PHASE" << std::endl;
         this->phase = 1;
         break;
       case 1:

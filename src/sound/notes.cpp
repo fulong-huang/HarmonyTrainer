@@ -8,13 +8,11 @@ Notes::Notes() {
 }
 
 Notes::Notes(const std::string& note) {
-	std::cout << "SET WITH STRING: " << note << std::endl;
   this->setNote(note);
   this->isPlaying = false;
 }
 
 Notes::Notes(int noteNumber) {
-	std::cout << "SET WITH INT: " << noteNumber << std::endl;
   this->setNote(noteNumber);
   this->isPlaying = false;
 }
@@ -55,7 +53,6 @@ void Notes::setNote(std::string noteName) {
 	// 	When multiple notes playing at the same time, 
 	// 	a audible beat starts clicking. 
   double pitch = this->parseNote(noteName);
-	std::cout << "PITCH: " << pitch << std::endl;
   sf::Int16 raw[SAMPLES];
   double increment = pitch / SAMPLES;
   double x = 0;
@@ -64,7 +61,7 @@ void Notes::setNote(std::string noteName) {
     x += increment;
   };
   if (!this->noteBuffer.loadFromSamples(raw, SAMPLES, 1, SAMPLE_RATE)) {
-    std::cout << "Loading From Samples Failed!!!" << std::endl;
+    std::cerr << "Note Buffer Loading From Samples Failed!!!" << std::endl;
     return;
   };
   this->noteSound.setBuffer(this->noteBuffer);
@@ -76,7 +73,6 @@ void Notes::setNote(int noteNumber) {
 	// 	When multiple notes playing at the same time, 
 	// 	a audible beat starts clicking. 
   double pitch = this->parseNote(noteNumber);
-	std::cout << "PITCH: " << pitch << std::endl;
   sf::Int16 raw[SAMPLES];
   double increment = pitch / SAMPLES;
   double x = 0;
@@ -85,7 +81,7 @@ void Notes::setNote(int noteNumber) {
     x += increment;
   };
   if (!this->noteBuffer.loadFromSamples(raw, SAMPLES, 1, SAMPLE_RATE)) {
-    std::cout << "Loading From Samples Failed!!!" << std::endl;
+    std::cerr << "Buffer Loading From Samples Failed!!!" << std::endl;
     return;
   };
   this->noteSound.setBuffer(this->noteBuffer);

@@ -17,6 +17,9 @@ public:
 	virtual sf::Vector2i getSize() = 0;
 
 	virtual bool boundCheck(sf::Vector2i pos) = 0;
+
+	virtual void scroll(int amount) = 0;
+	virtual void resetScroll() = 0;
 };
 
 

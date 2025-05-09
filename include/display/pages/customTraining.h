@@ -35,7 +35,7 @@ private:
 		LIST, SETTING, CONTENT,
 	};
 
-	std::vector<CustomTrainingItem*> items;
+	std::vector<CustomTrainingItem*> trainingItems;
 	CustomTrainingSetting customTrainingSetting;
 	CustomTrainingContent customTrainingContent;
 

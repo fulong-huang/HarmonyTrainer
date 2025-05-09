@@ -24,7 +24,7 @@ void Manager::run() {
 			}
 			else if(event.type == sf::Event::MouseButtonPressed){
 				this->handleMouseClick(sf::Mouse::getPosition(this->window));
-				this->soundControl.trigger();
+				// this->soundControl.trigger();
 			}
 // 			else if(event.type == sf::Event::KeyPressed){
 // 				if(event.key.code == sf::Keyboard::Down){
@@ -37,8 +37,6 @@ void Manager::run() {
 			else if(event.type == sf::Event::MouseWheelScrolled){
 				float delta = event.mouseWheelScroll.delta;
 				if(delta != 0){
-					std::cout << "DELTA: " << delta << std::endl;
-					std::cout << (delta > 0? "UP" : "DOWN") << std::endl;
 					this->customTraining.scroll(delta * 10);
 				}
 			}
@@ -48,7 +46,6 @@ void Manager::run() {
 }
 
 void Manager::handleMouseClick(sf::Vector2i mousePos){
-	std::cout << "POSITION: " << mousePos.x << ", " << mousePos.y << std::endl;
 	// TODO: 
 	// 	Either handle mouse click:
 	// 	- Directly control over [soundControl] object

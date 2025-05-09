@@ -31,16 +31,12 @@ void CustomTrainingSetting::scroll(int amount){
 	if(this->scrollPosition > 0){
 		this->scrollPosition = 0;
 	}
-	this->trainingSettingText->setPosition(
-			{this->width/2, this->margin + this->scrollPosition}
-			);
+	this->trainingSettingText->scroll(amount);
 	this->chordsSetting.scroll(amount);
 }
 void CustomTrainingSetting::resetScroll(){
 	this->scrollPosition = 0;
-	this->trainingSettingText->setPosition(
-			{this->width/2, this->margin}
-	);
+	this->trainingSettingText->resetScroll();
 	this->chordsSetting.resetScroll();
 }
 
