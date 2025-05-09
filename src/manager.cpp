@@ -7,10 +7,14 @@ Manager::Manager():
 
 	this->window.create(sf::VideoMode(this->width, this->height), "Harmony Trainer");
 	this->window.setFramerateLimit(FRAMERATE);
+
+	this->writer = new FileWriter("test.txt");
+	this->writer->writeToFile("new text");
 }
 
 Manager::~Manager(){
 	this->window.close();
+	delete this->writer;
 }
 
 void Manager::run() {

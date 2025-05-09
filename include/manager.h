@@ -6,6 +6,7 @@
 #include "soundControl.h"
 #include "menu.h"
 #include "customTraining.h"
+#include "fileWriter.h"
 
 const int FRAMERATE = 30;
 class Manager {
@@ -32,7 +33,10 @@ private:
 
 	// Display: 
 	int width, height;
-
 	bool isRunning; 
+
+	// TODO: 
+	// 	Test only, remove after
+	FileWriter* writer;
 
 };

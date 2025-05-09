@@ -26,11 +26,13 @@ find_package(SFML ${SFML_VERSION} COMPONENTS system window graphics audio)
 
 include_directories(
 	include
+	include/file
 	include/sound
 	include/display
 	include/display/pages
 	include/display/components
 	src
+	src/file
 	src/sound
 	src/display
 	src/display/pages
@@ -39,6 +41,9 @@ include_directories(
 
 add_executable(${PROJECT_NAME}
 	main.cpp
+
+	src/file/fileWriter.cpp
+	src/file/fileReader.cpp
 
 	src/display/components/chordSelection.cpp
 	src/display/components/customTrainingItem.cpp
