@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <fstream>
 
@@ -8,8 +9,9 @@ public:
 	~FileWriter();
 
 	void openFile(std::string fileName);
+	void closeFile();
 
-	bool isValidFile();
+	bool isOpen();
 	bool writeToFile(std::string content);
 
 private:

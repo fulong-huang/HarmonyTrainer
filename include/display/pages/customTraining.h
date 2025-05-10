@@ -7,6 +7,7 @@
 #include "customTrainingSetting.h"
 #include "customTrainingContent.h"
 #include "soundControl.h"
+#include "trainingListIO.h"
 
 class CustomTraining {
 public:
@@ -30,6 +31,7 @@ public:
 private:
   CustomTraining(const CustomTraining &d);
   CustomTraining operator=(const CustomTraining &d);
+	TrainingListIO trainingListIO;
 
 	enum Page{
 		LIST, SETTING, CONTENT,

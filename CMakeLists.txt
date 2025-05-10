@@ -44,6 +44,7 @@ add_executable(${PROJECT_NAME}
 
 	src/file/fileWriter.cpp
 	src/file/fileReader.cpp
+	src/file/trainingListIO.cpp
 
 	src/display/components/chordSelection.cpp
 	src/display/components/customTrainingItem.cpp

@@ -11,28 +11,39 @@ FileWriter::FileWriter(){
 }
 
 FileWriter::FileWriter(std::string fileName){
-	this->writeFile.open(SAVE_FILE_PATH + fileName);
+	this->openFile(fileName);
 }
 
 FileWriter::~FileWriter(){
-	if(this->writeFile.is_open()){
-		this->writeFile.close();
-	}
+	this->closeFile();
 }
 
 void FileWriter::openFile(std::string fileName){
-	if(this->writeFile.is_open()){
-		this->writeFile.close();
-	}
+	this->closeFile();
 	this->writeFile.open(SAVE_FILE_PATH + fileName);
 }
 
-bool FileWriter::isValidFile(){
+void FileWriter::closeFile(){
+	if(this->writeFile.is_open()){
+		this->writeFile.close();
+	}
+}
+
+bool FileWriter::isOpen(){
 	return this->writeFile.is_open();
 }
 
 bool FileWriter::writeToFile(std::string content){
-	this->writeFile << content;
+	try{
+		this->writeFile << content;
+	}
+	catch(...){
+		std::cerr << "Exception occured during file writing\n"
+			"File Content: \n\t"
+			"\t" << content << "\nEND of File Content"
+			<< std::endl;
+		return false;
+	}
 	return true;
 }
 

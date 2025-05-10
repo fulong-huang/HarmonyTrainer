@@ -6,8 +6,6 @@
 #include "soundControl.h"
 #include "menu.h"
 #include "customTraining.h"
-#include "fileWriter.h"
-#include "fileReader.h"
 
 const int FRAMERATE = 30;
 class Manager {

@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <fstream>
 
@@ -8,6 +9,7 @@ public:
 	~FileReader();
 
 	void openFile(std::string fileName);
+	void closeFile();
 	bool isValidFile();
 
 	std::string readLine();

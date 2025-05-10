@@ -10,16 +10,19 @@ FileReader::FileReader(){
 }
 
 FileReader::FileReader(std::string fileName){
-	this->readFile.open(SAVE_FILE_PATH + fileName);
+	this->openFile(fileName);
 }
 
 FileReader::~FileReader(){
-	if(this->readFile.is_open()){
-		this->readFile.close();
-	}
+	this->closeFile();
 }
 
 void FileReader::openFile(std::string fileName){
+	this->closeFile();
+	this->readFile.open(SAVE_FILE_PATH + fileName);
+}
+
+void FileReader::closeFile(){
 	if(this->readFile.is_open()){
 		this->readFile.close();
 	}
@@ -41,8 +44,11 @@ std::string FileReader::readRemaining(){
 	std::string result;
 	std::string line;
 	if(this->readFile.is_open()){
+		if(std::getline(this->readFile, line)){
+			result = line;
+		}
 		while(std::getline(this->readFile, line)){
-			result += line;
+			result += '\n' + line;
 		}
 	}
 	return result;

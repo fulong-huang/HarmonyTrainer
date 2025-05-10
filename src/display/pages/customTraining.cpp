@@ -16,12 +16,10 @@ void CustomTraining::setup(){
 	this->currentPage = Page::LIST;
 	gap = 150;
 
-
-	this->trainingItems.push_back(new CustomTrainingItem("FIRST TRAINING ITEM", width-2*margin.x, margin));
-	margin.y += gap;
-	this->trainingItems.push_back(new CustomTrainingItem("SECOND TRANING ITEM", width-2*margin.x, margin));
-	margin.y += gap;
-	this->trainingItems.push_back(new CustomTrainingItem("THIRD TRANING ITEM", width-2*margin.x, margin));
+	for(std::string item : this->trainingListIO.getListContent()){
+		this->trainingItems.push_back(new CustomTrainingItem(item, width-2*margin.x, margin));
+		margin.y += gap;
+	}
 };
 
 void CustomTraining::draw(sf::RenderWindow *window){
