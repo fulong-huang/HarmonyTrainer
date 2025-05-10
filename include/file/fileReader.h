@@ -3,9 +3,11 @@
 
 class FileReader{
 public:
+	FileReader();
 	FileReader(std::string fileName);
 	~FileReader();
 
+	void openFile(std::string fileName);
 	bool isValidFile();
 
 	std::string readLine();
@@ -15,7 +17,7 @@ private:
 	FileReader(FileReader& f);
 	FileReader* operator=(FileReader& f);
 
-	std::ifstream* readFile;
+	std::ifstream readFile;
 
 };
 
