@@ -64,6 +64,11 @@ void Text::setup() {
   this->recenter();
 };
 
+void Text::setMaxWidth(int maxWidth){
+	this->maxWidth = maxWidth;
+	this->setString(this->str);
+}
+
 void Text::setString(std::string str) {
   std::string currWord = "";
   int pos;
@@ -166,8 +171,9 @@ sf::Color Text::getColor() { return this->color; };
 sf::Vector2i Text::getPosition() { return this->pos; };
 
 sf::Vector2i Text::getSize() {
-  // TODO
-  return this->pos;
+	float width = this->text.getLocalBounds().width;
+	float height = this->text.getLocalBounds().height;
+  return {(int)width, (int)height};
 };
 
 bool Text::boundCheck(sf::Vector2i pos) {
@@ -208,3 +214,9 @@ void Text::resetScroll(){
 }
 
 std::string Text::getText() { return this->str; };
+
+void Text::setXPosition(int newX) {
+	this->pos = {newX, this->pos.y};
+  this->recenter();
+};
+

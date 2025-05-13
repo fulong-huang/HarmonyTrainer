@@ -28,6 +28,8 @@ public:
 	void scroll(int amount);
 	void resetScroll();
 
+	void resetItemsScroll();
+
 private:
   CustomTraining(const CustomTraining &d);
   CustomTraining operator=(const CustomTraining &d);

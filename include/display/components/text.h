@@ -19,6 +19,10 @@ public:
 	void setSize(int width, int height) override;
 	void setTransparency(bool transparent) override;
 
+	void setXPosition(int newX);
+
+	void setMaxWidth(int maxWidth);
+
 	sf::Color getColor() override;
 	sf::Vector2i getPosition() override;
 	sf::Vector2i getSize() override;

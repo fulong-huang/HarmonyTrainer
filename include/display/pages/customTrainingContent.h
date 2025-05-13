@@ -6,7 +6,9 @@
 
 class CustomTrainingContent {
 public:
-  CustomTrainingContent(int width=0, sf::Vector2i margin={100, 300});
+  CustomTrainingContent(int width=0,
+			sf::Vector2i margin={100, 100},
+			int padding = 20);
   ~CustomTrainingContent();
 	
 	void draw(sf::RenderWindow *window);
@@ -16,16 +18,22 @@ public:
 
 	void handleMouseClick(sf::Vector2i mousePos);
 
+	void open(std::string name);
+	
+	void changeWidth(int newWidth);
+
 private:
   CustomTrainingContent(const CustomTrainingContent &d);
   CustomTrainingContent operator=(const CustomTrainingContent &d);
 
   void setup();
 
-	int width;
 	sf::Vector2i margin;
+	int width;
+	int padding;
 
-	Text* trainingContentText;
+	Text* trainingContentTitle = NULL;
+	Text* trainingContentName = NULL;
 
 };
 

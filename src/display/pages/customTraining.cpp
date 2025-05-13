@@ -1,7 +1,7 @@
 #include "customTraining.h"
 
 CustomTraining::CustomTraining(int width, sf::Vector2i margin):
-	width(width), margin(margin)
+	customTrainingContent(width),width(width), margin(margin)
 {
 	this->setup();
 }
@@ -46,10 +46,17 @@ void CustomTraining::handleMouseClick(SoundControl* soundControl, sf::Vector2i m
 				int status = item->handleMouseClick(mousePos);
 				if(status == 1){
 					this->currentPage = Page::CONTENT;
+					this->customTrainingContent.open(item->getTitle());
+					// Do not reset, as user might miss click 
+					// 	and want to come back for neighbor item
+					// this->resetItemsScroll();
 					break;
 				}
 				else if(status == 2){
 					this->currentPage = Page::SETTING;
+					// Do not reset, as user might miss click 
+					// 	and want to come back for neighbor item
+					// this->resetItemsScroll();
 					break;
 				}
 			}
@@ -60,6 +67,7 @@ void CustomTraining::handleMouseClick(SoundControl* soundControl, sf::Vector2i m
 			break;
 		case CONTENT:
 			this->currentPage = Page::LIST;
+			this->customTrainingContent.resetScroll();
 			break;
 		default:
 			this->currentPage = Page::LIST;
@@ -83,8 +91,15 @@ void CustomTraining::scroll(int amount){
 
 void CustomTraining::resetScroll(){
 	this->customTrainingSetting.resetScroll();
+	this->customTrainingContent.resetScroll();
+	this->resetItemsScroll();
 }
 
+void CustomTraining::resetItemsScroll(){
+	for(CustomTrainingItem* item: this->trainingItems){
+		item->resetScroll();
+	}
+}
 
 
 
