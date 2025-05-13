@@ -101,9 +101,9 @@ sf::Vector2i Rectangle::getSize() {
 bool Rectangle::boundCheck(sf::Vector2i pos) {
 	bool inBound = !this->transparent &&
 		this->pos.x <= pos.x &&
-		this->pos.y <= pos.y &&
+		this->pos.y + this->scrollPosition <= pos.y &&
 		this->pos.x + this->width >= pos.x &&
-		this->pos.y + this->height >= pos.y;
+		this->pos.y + this->height + this->scrollPosition >= pos.y;
 	return inBound;
 };
 

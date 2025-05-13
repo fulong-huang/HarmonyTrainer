@@ -99,7 +99,7 @@ sf::Vector2i Circle::getSize() { return {this->radius * 2, this->radius * 2}; };
 
 bool Circle::boundCheck(sf::Vector2i pos) {
   int distX = pos.x - this->pos.x - this->radius;
-  int distY = pos.y - this->pos.y - this->radius;
+  int distY = pos.y - this->pos.y - this->radius + this->scrollPosition;
   float dist = std::sqrt(distX * distX + distY * distY);
   return !this->transparent && dist <= this->radius;
 };
