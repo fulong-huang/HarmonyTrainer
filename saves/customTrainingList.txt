@@ -1,5 +1,4 @@
-ListItem 1
-List Item 2
-Newly added item
-NEW TESTING ITEM
-Item with a very very very long name, to test if text map to next line.
+Major/Minor 3rd
+Perfect 5th / Perfect 4th
+Third item placeholder
+A very very long item to test text object's auto-new-line feature

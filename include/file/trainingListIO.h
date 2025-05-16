@@ -12,8 +12,13 @@ public:
 	std::vector<std::string> getListContent();
 
 	bool addListItem(std::string itemName);
+	
+	bool createTrainingSettings(std::string fileName);
 
 	friend std::ostream& operator<<(std::ostream &out, const TrainingListIO &t);
+
+	std::vector<std::string> readListContent();
+	TrainingSettings* readTrainingSettings(std::string fileName);
 
 private:
 	TrainingListIO(TrainingListIO& t);

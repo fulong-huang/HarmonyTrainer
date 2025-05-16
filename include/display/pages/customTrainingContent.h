@@ -3,6 +3,7 @@
 #include "rectangle.h"
 #include "circle.h"
 #include "text.h"
+#include "trainingSettings.h"
 
 class CustomTrainingContent {
 public:
@@ -34,6 +35,10 @@ private:
 
 	Text* trainingContentTitle = NULL;
 	Text* trainingContentName = NULL;
+
+
+	// Training settings:
+	TrainingSettings trainingSettings;
 
 };
 

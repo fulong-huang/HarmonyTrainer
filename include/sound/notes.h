@@ -12,13 +12,13 @@ const double NotePitches[] = {
     20.601723,  21.826765,  23.124651, 24.499714,
     25.956543, 27.500000,  29.135235, 30.867706,
 };
-enum NoteSteps{
-	m2 = 1, M2 = 2,
-	m3 = 3, M3 = 4,
-	P4 = 5, A4 = 6, P5 = 7,
-	m6 = 8, M6 = 9,
-	m7 = 10, M7 = 11
-};
+// enum NoteSteps{
+// 	m2 = 1, M2 = 2,
+// 	m3 = 3, M3 = 4,
+// 	P4 = 5, A4 = 6, P5 = 7,
+// 	m6 = 8, M6 = 9,
+// 	m7 = 10, M7 = 11
+// };
 
 const std::string NoteStepNames[] = {
 	"m2", "M2", 
@@ -28,6 +28,16 @@ const std::string NoteStepNames[] = {
 	"m6", "M6", 
 	"m7", "M7", 
 	"P8",
+};
+
+enum NoteStepNameIndex{
+	m2, M2, 
+	m3, M3, 
+	P4, A4, 
+	P5, A5, 
+	m6, M6, 
+	m7, M7, 
+	P8,
 };
 
 const int MajorSteps[] = {

@@ -1,0 +1,6 @@
+chord type: 1
+chord range: {36, 60}
+wait time: 2
+harmonic duration: 2
+melodic duration: 3
+new question wait time: 2
