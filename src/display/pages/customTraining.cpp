@@ -30,12 +30,9 @@ void CustomTraining::setup(){
 		this->trainingItems.push_back(
 				new CustomTrainingItem(item, width-2*margin.x, margin)
 				);
-		// TODO: 
-		// 	When attempting to crteate file,
-		// 	must check if name is valid.
-		// 	Valid name required at least one alphanumeric character
 
-		// this->trainingListIO.createTrainingSettings(keepAlNum(item) + ".txt");
+// 		TrainingSettings trainingSetting;
+// 		this->trainingListIO.createTrainingSettings(keepAlNum(item) + ".txt", &trainingSetting);
 		margin.y += gap;
 	}
 };
@@ -64,13 +61,15 @@ void CustomTraining::handleMouseClick(SoundControl* soundControl, sf::Vector2i m
 				int status = item->handleMouseClick(mousePos);
 				if(status == 1){
 					this->currentPage = Page::CONTENT;
-					this->trainingListIO.readTrainingSettings(
+
+					this->customTrainingContent.open(item->getTitle());
+
+					TrainingSettings* currentSetting = this->trainingListIO.readTrainingSettings(
 							keepAlNum(item->getTitle())+".txt"
 							);
-					this->customTrainingContent.open(item->getTitle());
-					// Do not reset, as user might miss click 
-					// 	and want to come back for neighbor item
-					// this->resetItemsScroll();
+					this->soundControl->setSoundControl(currentSetting);
+					delete currentSetting;
+
 					break;
 				}
 				else if(status == 2){
@@ -122,5 +121,8 @@ void CustomTraining::resetItemsScroll(){
 	}
 }
 
+void CustomTraining::setSoundControl(SoundControl* soundControl){
+	this->soundControl = soundControl;
+}
 
 

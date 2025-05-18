@@ -26,7 +26,7 @@ struct TrainingSettings{
 				result += "chord type: SEVENTH\n";
 				break;
 		}
-		result += "chord range: " + std::to_string(item.chordRange[0]) + ", " + std::to_string(item.chordRange[1]);
+		result += "chord range: {" + std::to_string(item.chordRange[0]) + ", " + std::to_string(item.chordRange[1]) + '}';
 		result += "\nwait time: " + std::to_string(item.waitTime);
 		result += "\nharmonic duration: " + std::to_string(item.harmonicDuration);
 		result += "\nmelodic duration: " + std::to_string(item.melodicDuration);

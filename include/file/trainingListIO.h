@@ -1,6 +1,7 @@
 #include <iostream>
 #include "fileWriter.h"
 #include "fileReader.h"
+#include "trainingSettings.h"
 
 class TrainingListIO{
 public:
@@ -13,7 +14,10 @@ public:
 
 	bool addListItem(std::string itemName);
 	
-	bool createTrainingSettings(std::string fileName);
+	bool createTrainingSettings(std::string fileName, TrainingSettings* settings);
+
+	// TODO: 
+	// renameFile
 
 	friend std::ostream& operator<<(std::ostream &out, const TrainingListIO &t);
 

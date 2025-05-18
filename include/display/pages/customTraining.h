@@ -20,6 +20,7 @@ public:
 	// TODO: 
 	// 	Create new custom training
 	void createTraining();
+	void setSoundControl(SoundControl* soundControl);
 
 	void draw(sf::RenderWindow *window);
 
@@ -45,6 +46,8 @@ private:
 
 	sf::Vector2i margin;
 	int width, height, gap;
+
+	SoundControl* soundControl;
 
 	Page currentPage;
   void setup();

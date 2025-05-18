@@ -46,14 +46,29 @@ std::ostream& operator<<(std::ostream &out, const TrainingListIO &t){
 	return out;
 }
 
-bool TrainingListIO::createTrainingSettings(std::string fileName){
+bool TrainingListIO::createTrainingSettings(std::string fileName, TrainingSettings* settings){
+	// TODO: 
+	// 	When attempting to crteate file,
+	// 	must check if name is valid.
+	// 	Valid name required at least one alphanumeric character
 	FileWriter fileWriter("customTrainings/"+fileName);
-	fileWriter.writeToFile("chord type: 0\n");
-	fileWriter.writeToFile("chord range: {36, 60}\n");
-	fileWriter.writeToFile("wait time: 2\n");
-	fileWriter.writeToFile("harmonic duration: 2\n");
-	fileWriter.writeToFile("melodic duration: 1\n");
-	fileWriter.writeToFile("new question wait time: 2\n");
+
+	switch(settings->chordType){
+		case INTERVAL:
+			fileWriter.writeToFile("chord type: 0\n");
+			break;
+		case TRAID:
+			fileWriter.writeToFile("chord type: 1\n");
+			break;
+		case SEVENTH:
+			fileWriter.writeToFile("chord type: 2\n");
+			break;
+	}
+	fileWriter.writeToFile("chord range: {" + std::to_string(settings->chordRange[0]) + ", " + std::to_string(settings->chordRange[1]) + "}\n");
+	fileWriter.writeToFile("wait time: " + std::to_string(settings->waitTime) + '\n');
+	fileWriter.writeToFile("harmonic duration: " + std::to_string(settings->harmonicDuration) + '\n');
+	fileWriter.writeToFile("melodic duration: " + std::to_string(settings->melodicDuration) + '\n');
+	fileWriter.writeToFile("new question wait time: " + std::to_string(settings->newQuestionWaitTime));
 	return true;
 }
 
@@ -153,7 +168,7 @@ TrainingSettings* TrainingListIO::readTrainingSettings(std::string fileName){
 						break;
 					}
 				}
-				trainingSettings->harmonicDuration = std::stoi(settingValue);
+				trainingSettings->newQuestionWaitTime = std::stoi(settingValue);
 				break;
 		}
 		currLine = fileReader.readLine();

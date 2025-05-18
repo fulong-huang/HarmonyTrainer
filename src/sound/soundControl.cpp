@@ -63,13 +63,16 @@ void SoundControl::playSound() {
                            .count() /
                        1000000.0;
     if (timePassed > this->currWaitTime) {
-      this->begin = std::chrono::steady_clock::now();
       switch (this->phase) {
       case 0:
+				// TODO: 
+				//  Generate randomw note is slow
         this->noteGenerator->generateRandomNote(
 						this->harmonyNotes,
 						this->melodyNotes,
-						this->harmonyGaps
+						this->harmonyGaps,
+						this->noteUpperBound,
+						this->noteLowerBound
 						);
         this->harmonyNotes[0]->start();
         this->harmonyNotes[1]->start();
@@ -91,15 +94,26 @@ void SoundControl::playSound() {
           this->melodyNotes[this->noteIndex]->start();
           this->noteIndex++;
         } else {
-          this->phase = 3;
+          this->phase = 0;
           this->noteIndex = 0;
+					this->currWaitTime = this->newQuestionWaitTime;
         }
         break;
-      case 3:
-        this->phase = 0;
-        this->currWaitTime = this->newQuestionWaitTime;
-        break;
+//       case 3:
+//         this->phase = 0;
+//         break;
       }
+		this->begin = std::chrono::steady_clock::now();
     }
   }
 }
+
+void SoundControl::setSoundControl(TrainingSettings* setting){
+	this->noteUpperBound = setting->chordRange[0];
+	this->noteLowerBound = setting->chordRange[1];
+	this->answerWaitTime = setting->waitTime;
+	this->harmonyDuration = setting->harmonicDuration;
+	this->melodyDuration = setting->melodicDuration;
+	this->newQuestionWaitTime = setting->newQuestionWaitTime;
+}
+

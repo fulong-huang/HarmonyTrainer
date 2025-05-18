@@ -7,6 +7,8 @@
 #include "notes.h"
 #include "noteGenerator.h"
 
+#include "trainingSettings.h"
+
 // TODO: Remove it after generator assignment called from outside
 #include "noteGenBySteps.h"
 
@@ -16,6 +18,8 @@ public:
   ~SoundControl();
 
 	void setNoteGenerator(NoteGenerator *noteGenerator);
+
+	void setSoundControl(TrainingSettings* setting);
 
 	void trigger();
 	void playSound();
@@ -42,6 +46,7 @@ private:
 	std::vector<int> harmonyGaps;
 
 	float harmonyDuration, answerWaitTime, melodyDuration, newQuestionWaitTime;
+	int noteUpperBound, noteLowerBound;
 	int phase, noteIndex;
 	int currWaitTime;
 
