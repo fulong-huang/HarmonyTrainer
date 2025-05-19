@@ -7,7 +7,9 @@ CustomTrainingSetting::CustomTrainingSetting(int width):
 }
 
 CustomTrainingSetting::~CustomTrainingSetting(){
-
+	if(this->trainingSettingText){
+		delete this->trainingSettingText;
+	}
 }
 
 void CustomTrainingSetting::setup(){

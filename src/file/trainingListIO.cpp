@@ -83,9 +83,9 @@ std::vector<std::string> TrainingListIO::readListContent(){
 	return result;
 }
 
-TrainingSettings* TrainingListIO::readTrainingSettings(std::string fileName){
+void TrainingListIO::loadTrainingSettings(std::string fileName, SoundControl* soundControl){
 	FileReader fileReader("customTrainings/"+fileName);
-	TrainingSettings* trainingSettings = new TrainingSettings();
+	TrainingSettings trainingSettings;
 	std::string currLine = fileReader.readLine();
 	static const std::unordered_map<std::string, int> m = {
 		{"chord type", 0},
@@ -112,10 +112,10 @@ TrainingSettings* TrainingListIO::readTrainingSettings(std::string fileName){
 			case 0:
 				if(settingValue.size() != 1){
 					std::cerr << "Chord Type incorrect value" << std::endl;
-					trainingSettings->chordType = INTERVAL;
+					trainingSettings.chordType = INTERVAL;
 				}
 				else{
-					trainingSettings->chordType = ChordType(settingValue[0] - '0');
+					trainingSettings.chordType = ChordType(settingValue[0] - '0');
 				}
 				break;
 			case 1:
@@ -124,7 +124,7 @@ TrainingSettings* TrainingListIO::readTrainingSettings(std::string fileName){
 				if(separateCharacterIndex != std::string::npos){
 					int start = std::stoi(settingValue.substr(0, separateCharacterIndex));
 					int end = std::stoi(settingValue.substr(separateCharacterIndex + 2));
-					trainingSettings->chordRange = {start, end};
+					trainingSettings.chordRange = {start, end};
 				}
 				else{
 					std::cerr << "interval range required two values" << std::endl;
@@ -138,7 +138,7 @@ TrainingSettings* TrainingListIO::readTrainingSettings(std::string fileName){
 						break;
 					}
 				}
-				trainingSettings->waitTime = std::stoi(settingValue);
+				trainingSettings.waitTime = std::stoi(settingValue);
 				break;
 			case 3:
 				for(char c : settingValue){
@@ -148,7 +148,7 @@ TrainingSettings* TrainingListIO::readTrainingSettings(std::string fileName){
 						break;
 					}
 				}
-				trainingSettings->harmonicDuration = std::stoi(settingValue);
+				trainingSettings.harmonicDuration = std::stoi(settingValue);
 				break;
 			case 4:
 				for(char c : settingValue){
@@ -158,7 +158,7 @@ TrainingSettings* TrainingListIO::readTrainingSettings(std::string fileName){
 						break;
 					}
 				}
-				trainingSettings->melodicDuration = std::stoi(settingValue);
+				trainingSettings.melodicDuration = std::stoi(settingValue);
 				break;
 			case 5:
 				for(char c : settingValue){
@@ -168,13 +168,13 @@ TrainingSettings* TrainingListIO::readTrainingSettings(std::string fileName){
 						break;
 					}
 				}
-				trainingSettings->newQuestionWaitTime = std::stoi(settingValue);
+				trainingSettings.newQuestionWaitTime = std::stoi(settingValue);
 				break;
 		}
 		currLine = fileReader.readLine();
 	}
-	std::cout << *trainingSettings << std::endl;
-	return trainingSettings;
+	std::cout << trainingSettings << std::endl;
+	soundControl->setSoundControl(&trainingSettings);
 }
 
 

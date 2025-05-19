@@ -19,6 +19,8 @@ ChordSelectionItem::ChordSelectionItem(sf::Vector2i position, std::string name):
 }
 
 ChordSelectionItem::~ChordSelectionItem(){
+	delete this->background;
+	delete this->text;
 }
 
 void ChordSelectionItem::draw(sf::RenderWindow *window){
@@ -68,7 +70,9 @@ ChordSelection::ChordSelection(){
 }
 
 ChordSelection::~ChordSelection(){
-
+	for(ChordSelectionItem* item: this->selections){
+		delete item;
+	}
 }
 
 void ChordSelection::draw(sf::RenderWindow *window){
@@ -78,13 +82,13 @@ void ChordSelection::draw(sf::RenderWindow *window){
 }
 
 void ChordSelection::scroll(int amount){
-	for(ChordSelectionItem* item : selections){
+	for(ChordSelectionItem* item : this->selections){
 		item->scroll(amount);
 	}
 }
 
 void ChordSelection::resetScroll(){
-	for(ChordSelectionItem* item: selections){
+	for(ChordSelectionItem* item: this->selections){
 		item->resetScroll();
 	}
 }

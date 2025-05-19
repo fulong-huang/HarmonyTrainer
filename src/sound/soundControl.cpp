@@ -28,6 +28,7 @@ void SoundControl::cleanUpNotes() {
   }
   this->melodyNotes.clear();
   this->harmonyNotes.clear();
+	std::cout << "STOPPING" << std::endl;
 }
 
 void SoundControl::trigger() {
@@ -51,6 +52,7 @@ void SoundControl::start() {
 }
 void SoundControl::stop() {
   this->playing = false;
+	this->cleanUpNotes();
 }
 
 bool SoundControl::isPlaying() { return this->playing; }

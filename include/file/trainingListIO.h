@@ -2,6 +2,7 @@
 #include "fileWriter.h"
 #include "fileReader.h"
 #include "trainingSettings.h"
+#include "soundControl.h"
 
 class TrainingListIO{
 public:
@@ -22,7 +23,7 @@ public:
 	friend std::ostream& operator<<(std::ostream &out, const TrainingListIO &t);
 
 	std::vector<std::string> readListContent();
-	TrainingSettings* readTrainingSettings(std::string fileName);
+	void loadTrainingSettings(std::string fileName, SoundControl* soundControl);
 
 private:
 	TrainingListIO(TrainingListIO& t);

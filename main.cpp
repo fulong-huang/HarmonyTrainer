@@ -1,8 +1,12 @@
 #include "manager.h"
 #include <iostream>
 
-int main() {
+void run(){
   Manager manager;
   manager.run();
+}
+
+int main() {
+	run();
   return 0;
 }

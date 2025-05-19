@@ -64,12 +64,10 @@ void CustomTraining::handleMouseClick(SoundControl* soundControl, sf::Vector2i m
 
 					this->customTrainingContent.open(item->getTitle());
 
-					TrainingSettings* currentSetting = this->trainingListIO.readTrainingSettings(
-							keepAlNum(item->getTitle())+".txt"
+					this->trainingListIO.loadTrainingSettings(
+							keepAlNum(item->getTitle())+".txt",
+							soundControl
 							);
-					this->soundControl->setSoundControl(currentSetting);
-					delete currentSetting;
-
 					break;
 				}
 				else if(status == 2){

@@ -1,7 +1,10 @@
 #include "option.h"
 
 Option::~Option(){
-
+	delete this->background;
+	delete this->dot1;
+	delete this->dot2;
+	delete this->dot3;
 }
 
 Option::Option(sf::Vector2i position, sf::Vector2i dimension, int radius):

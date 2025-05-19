@@ -29,7 +29,7 @@ private:
 	int width;
 	int margin = 100;
 
-	Text* trainingSettingText;
+	Text* trainingSettingText = NULL;
 
 	int scrollPosition; 
 

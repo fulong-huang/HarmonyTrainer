@@ -24,10 +24,10 @@ class Option{
 		sf::Vector2i dimension;
 		int radius;
 
-		Rectangle* background;
-		Circle* dot1;
-		Circle* dot2;
-		Circle* dot3;
+		Rectangle* background = NULL;
+		Circle* dot1 = NULL;
+		Circle* dot2 = NULL;
+		Circle* dot3 = NULL;
 
 };
 
