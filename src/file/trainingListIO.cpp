@@ -64,7 +64,24 @@ bool TrainingListIO::createTrainingSettings(std::string fileName, TrainingSettin
 			fileWriter.writeToFile("chord type: 2\n");
 			break;
 	}
+	
+	switch(settings->playBackMode){
+		case MELODIC:
+			fileWriter.writeToFile("play back mode: 0\n");
+			break;
+		case HARMONIC:
+			fileWriter.writeToFile("play back mode: 1\n");
+			break;
+	}
 	fileWriter.writeToFile("chord range: {" + std::to_string(settings->chordRange[0]) + ", " + std::to_string(settings->chordRange[1]) + "}\n");
+
+	std::string chordChoiceString = "chord choice: {" + std::to_string(settings->chordChoice[0]);
+	for(int i = 1; i < settings->chordChoice.size(); i++){
+		chordChoiceString += ", " + std::to_string(settings->chordChoice[i]);
+	}
+	chordChoiceString += "}\n";
+	fileWriter.writeToFile(chordChoiceString);
+	
 	fileWriter.writeToFile("wait time: " + std::to_string(settings->waitTime) + '\n');
 	fileWriter.writeToFile("harmonic duration: " + std::to_string(settings->harmonicDuration) + '\n');
 	fileWriter.writeToFile("melodic duration: " + std::to_string(settings->melodicDuration) + '\n');
@@ -89,11 +106,13 @@ void TrainingListIO::loadTrainingSettings(std::string fileName, SoundControl* so
 	std::string currLine = fileReader.readLine();
 	static const std::unordered_map<std::string, int> m = {
 		{"chord type", 0},
-		{"chord range", 1},
-		{"wait time", 2},
-		{"harmonic duration", 3},
-		{"melodic duration", 4},
-		{"new question wait time", 5},
+		{"play back mode", 1},
+		{"chord range", 2},
+		{"chord choice", 3},
+		{"wait time", 4},
+		{"harmonic duration", 5},
+		{"melodic duration", 6},
+		{"new question wait time", 7},
 	};
 	while(currLine.size() != 0){
 		std::string settingName, settingValue;
@@ -109,7 +128,7 @@ void TrainingListIO::loadTrainingSettings(std::string fileName, SoundControl* so
 		settingValue = currLine.substr(separateCharacterIndex + 2);
 
 		switch(m.at(settingName)){
-			case 0:
+			case 0: // Chord Type
 				if(settingValue.size() != 1){
 					std::cerr << "Chord Type incorrect value" << std::endl;
 					trainingSettings.chordType = INTERVAL;
@@ -118,7 +137,16 @@ void TrainingListIO::loadTrainingSettings(std::string fileName, SoundControl* so
 					trainingSettings.chordType = ChordType(settingValue[0] - '0');
 				}
 				break;
-			case 1:
+			case 1: // Play Back Mode
+				if(settingValue.size() != 1){
+					std::cerr << "Play Back Mode incorrect value" << std::endl;
+					trainingSettings.playBackMode = MELODIC;
+				}
+				else{
+					trainingSettings.playBackMode = PlayBackMode(settingValue[0] - '0');
+				}
+				break;
+			case 2: // ChordRange
 				settingValue = settingValue.substr(1, settingValue.size()-2);
 				separateCharacterIndex = settingValue.find(',');
 				if(separateCharacterIndex != std::string::npos){
@@ -130,7 +158,19 @@ void TrainingListIO::loadTrainingSettings(std::string fileName, SoundControl* so
 					std::cerr << "interval range required two values" << std::endl;
 				}
 				break;
-			case 2:
+			case 3: // ChordChoice
+				settingValue = settingValue.substr(1, settingValue.size()-2);
+				{
+					std::vector<int> chordChoice;
+					chordChoice.push_back(std::stoi(settingValue));
+					while((separateCharacterIndex = settingValue.find(',')) != std::string::npos){
+						settingValue = settingValue.substr(separateCharacterIndex + 1);
+						chordChoice.push_back(std::stoi(settingValue));
+					}
+					trainingSettings.chordChoice = chordChoice;
+				}
+				break;
+			case 4: // Wait Time
 				for(char c : settingValue){
 					if(!std::isdigit(c)){
 						std::cerr << "Wait time is not a number" << std::endl;
@@ -140,7 +180,7 @@ void TrainingListIO::loadTrainingSettings(std::string fileName, SoundControl* so
 				}
 				trainingSettings.waitTime = std::stoi(settingValue);
 				break;
-			case 3:
+			case 5:
 				for(char c : settingValue){
 					if(!std::isdigit(c)){
 						std::cerr << "harmonic time is not a number" << std::endl;
@@ -150,7 +190,7 @@ void TrainingListIO::loadTrainingSettings(std::string fileName, SoundControl* so
 				}
 				trainingSettings.harmonicDuration = std::stoi(settingValue);
 				break;
-			case 4:
+			case 6:
 				for(char c : settingValue){
 					if(!std::isdigit(c)){
 						std::cerr << "melodic time is not a number" << std::endl;
@@ -160,7 +200,7 @@ void TrainingListIO::loadTrainingSettings(std::string fileName, SoundControl* so
 				}
 				trainingSettings.melodicDuration = std::stoi(settingValue);
 				break;
-			case 5:
+			case 7:
 				for(char c : settingValue){
 					if(!std::isdigit(c)){
 						std::cerr << "new question time is not a number" << std::endl;

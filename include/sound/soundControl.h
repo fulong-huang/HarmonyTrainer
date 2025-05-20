@@ -9,8 +9,8 @@
 
 #include "trainingSettings.h"
 
-// TODO: Remove it after generator assignment called from outside
-#include "noteGenBySteps.h"
+#include "noteGenMelodic.h"
+#include "noteGenHarmonic.h"
 
 class SoundControl {
 public:
@@ -47,10 +47,9 @@ private:
 
 	float harmonyDuration, answerWaitTime, melodyDuration, newQuestionWaitTime;
 	int noteUpperBound, noteLowerBound;
-	int phase, noteIndex;
+	int phase;
 	int currWaitTime;
 
-	void cleanUpNotes();
 };
 
 

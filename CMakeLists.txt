@@ -59,7 +59,8 @@ add_executable(${PROJECT_NAME}
 	src/display/pages/customTraining.cpp
 
 	src/sound/notes.cpp
-	src/sound/noteGenBySteps.cpp
+	src/sound/noteGenMelodic.cpp
+	src/sound/noteGenHarmonic.cpp
 	src/sound/soundControl.cpp
 
 	src/manager.cpp

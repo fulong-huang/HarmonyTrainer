@@ -1,6 +1,8 @@
 chord type: 0
-chord range: {50, 60}
+play back mode: 1
+chord range: {36, 60}
+chord choice: {1, 2}
 wait time: 0
-harmonic duration: 1
+harmonic duration: 2
 melodic duration: 1
 new question wait time: 0

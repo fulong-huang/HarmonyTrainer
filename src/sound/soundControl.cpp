@@ -18,17 +18,6 @@ SoundControl::~SoundControl() {
 	if(this->noteGenerator){
 		delete this->noteGenerator;
 	}
-	this->cleanUpNotes();
-}
-
-void SoundControl::cleanUpNotes() {
-  for (Notes *note : this->melodyNotes) {
-    note->stop();
-    delete note;
-  }
-  this->melodyNotes.clear();
-  this->harmonyNotes.clear();
-	std::cout << "STOPPING" << std::endl;
 }
 
 void SoundControl::trigger() {
@@ -41,18 +30,19 @@ void SoundControl::trigger() {
 
 void SoundControl::start() {
 	if(!this->noteGenerator){
-		this->noteGenerator = new NoteGenBySteps();
+		std::cerr << "Note Generator Failed to Load" << std::endl;
+		this->noteGenerator = new NoteGenHarmonic();
+		this->noteGenerator->setChords({3, 5});
 	}
   this->playing = true;
   this->begin = std::chrono::steady_clock::now();
   phase = 0;
   this->currWaitTime = 0;
-  this->noteIndex = 0;
   // this->currWaitTime = harmonyDuration;
 }
 void SoundControl::stop() {
   this->playing = false;
-	this->cleanUpNotes();
+	this->noteGenerator->stopAllNotes();
 }
 
 bool SoundControl::isPlaying() { return this->playing; }
@@ -69,37 +59,24 @@ void SoundControl::playSound() {
       case 0:
 				// TODO: 
 				//  Generate randomw note is slow
-        this->noteGenerator->generateRandomNote(
-						this->harmonyNotes,
-						this->melodyNotes,
-						this->harmonyGaps,
-						this->noteUpperBound,
-						this->noteLowerBound
-						);
-        this->harmonyNotes[0]->start();
-        this->harmonyNotes[1]->start();
+        this->noteGenerator->generateRandomNote();
+				this->noteGenerator->playSelectedChord();
         this->currWaitTime = this->harmonyDuration;
         this->phase = 1;
         break;
       case 1:
-        this->harmonyNotes[0]->stop();
-        this->harmonyNotes[1]->stop();
+				this->noteGenerator->stopSelectedChord();
         this->currWaitTime = this->answerWaitTime;
         this->phase = 2;
         break;
       case 2:
-        this->currWaitTime = this->melodyDuration;
-        if (this->noteIndex > 0) {
-          this->melodyNotes[this->noteIndex - 1]->stop();
-        }
-        if (this->noteIndex < this->melodyNotes.size()) {
-          this->melodyNotes[this->noteIndex]->start();
-          this->noteIndex++;
-        } else {
-          this->phase = 0;
-          this->noteIndex = 0;
+				if(this->noteGenerator->playValidationNotes()){
+					this->currWaitTime = this->melodyDuration;
+				}
+				else{
+					this->phase = 0;
 					this->currWaitTime = this->newQuestionWaitTime;
-        }
+				}
         break;
 //       case 3:
 //         this->phase = 0;
@@ -111,6 +88,13 @@ void SoundControl::playSound() {
 }
 
 void SoundControl::setSoundControl(TrainingSettings* setting){
+	if(setting->playBackMode == MELODIC){
+		this->noteGenerator = new NoteGenMelodic();
+	}
+	else{
+		this->noteGenerator = new NoteGenHarmonic();
+	}
+	this->noteGenerator->setChords(setting->chordChoice);
 	this->noteUpperBound = setting->chordRange[0];
 	this->noteLowerBound = setting->chordRange[1];
 	this->answerWaitTime = setting->waitTime;

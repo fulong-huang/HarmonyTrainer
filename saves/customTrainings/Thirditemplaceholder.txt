@@ -1,5 +1,7 @@
 chord type: 0
+play back mode: 1
 chord range: {36, 60}
+chord choice: {4, 7}
 wait time: 2
 harmonic duration: 2
 melodic duration: 1
