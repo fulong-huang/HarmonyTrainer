@@ -26,9 +26,19 @@ void NoteGenHarmonic::generateRandomNote() {
   this->chosenIndex = std::rand() % this->chordChoices.size();
 
   this->rootNote->setNote(currNoteNumber);
-  for (int i = 0; i < this->chordChoices.size(); i++) {
-		this->chordNotes[i]->setNote(currNoteNumber + this->chordChoices[i]);
-  }
+	if(this->tunningMode == JUST){
+		double rootPitch = this->rootNote->getPitch();
+		for (int i = 0; i < this->chordChoices.size(); i++) {
+			this->chordNotes[i]->setPitch(
+					rootPitch * TunningJustRatio[this->chordChoices[i]]
+					);
+		}
+	}
+	else{
+		for (int i = 0; i < this->chordChoices.size(); i++) {
+			this->chordNotes[i]->setNote(currNoteNumber + this->chordChoices[i]);
+		}
+	}
 	this->currentNoteIndex = -1;
 }
 

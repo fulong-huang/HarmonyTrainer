@@ -28,33 +28,33 @@ double Notes::parseNote(std::string strName) {
 		index = NoteIndex.at(strName.substr(0, 1));
 	}
 
-  double pitch = NotePitches[index];
+  this->currentPitch = NotePitches[index];
   while (octave > 0) {
-    pitch *= 2;
+    this->currentPitch *= 2;
     octave--;
   };
-  return pitch;
+  return this->currentPitch;
 };
 
 double Notes::parseNote(int noteNumber) {
   int octave = noteNumber / 12;
   int idx = noteNumber % 12;
 
-  double pitch = NotePitches[idx];
+  this->currentPitch = NotePitches[idx];
   while (octave > 0) {
-    pitch *= 2;
+    this->currentPitch *= 2;
     octave--;
   };
-  return pitch;
+  return this->currentPitch;
 };
 
 void Notes::setNote(std::string noteName) {
 	// Not using double because of the uninvestigated issue:
 	// 	When multiple notes playing at the same time, 
 	// 	a audible beat starts clicking. 
-  double pitch = this->parseNote(noteName);
+  this->parseNote(noteName);
   sf::Int16 raw[SAMPLES];
-  double increment = pitch / SAMPLES;
+  double increment = this->currentPitch / SAMPLES;
   double x = 0;
   for (unsigned i = 0; i < SAMPLES; i++) {
     raw[i] = AMPLITUDE * sin(x * TWO_PI);
@@ -72,9 +72,9 @@ void Notes::setNote(int noteNumber) {
 	// Not using double because of the uninvestigated issue:
 	// 	When multiple notes playing at the same time, 
 	// 	a audible beat starts clicking. 
-  double pitch = this->parseNote(noteNumber);
+  this->parseNote(noteNumber);
   sf::Int16 raw[SAMPLES];
-  double increment = pitch / SAMPLES;
+  double increment = this->currentPitch / SAMPLES;
   double x = 0;
   for (unsigned i = 0; i < SAMPLES; i++) {
     raw[i] = AMPLITUDE * sin(x * TWO_PI);
@@ -108,5 +108,26 @@ void Notes::stop() {
 	}
 	this->noteSound.stop();
 	this->isPlaying = false; 
+}
+
+void Notes::setPitch(double pitch){
+	this->currentPitch = pitch;
+  sf::Int16 raw[SAMPLES];
+  double increment = this->currentPitch / SAMPLES;
+  double x = 0;
+  for (unsigned i = 0; i < SAMPLES; i++) {
+    raw[i] = AMPLITUDE * sin(x * TWO_PI);
+    x += increment;
+  };
+  if (!this->noteBuffer.loadFromSamples(raw, SAMPLES, 1, SAMPLE_RATE)) {
+    std::cerr << "Buffer Loading From Samples Failed!!!" << std::endl;
+    return;
+  };
+  this->noteSound.setBuffer(this->noteBuffer);
+  this->noteSound.setLoop(true);
+}
+
+double Notes::getPitch(){
+	return this->currentPitch;
 }
 

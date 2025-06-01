@@ -3,9 +3,17 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 
+enum TunningMode{
+	EQUAL,
+	PYTHAGOREAN,
+	JUST,
+};
+
 class NoteGenerator {
 public:
-  NoteGenerator(){};
+  NoteGenerator(){
+		this->tunningMode = JUST;
+	};
   virtual ~NoteGenerator(){};
 
   virtual void generateRandomNote() = 0;
@@ -24,6 +32,7 @@ public:
 
 protected:
 	virtual void cleanupNotes() = 0;
+	TunningMode tunningMode;
 	int lowerBound = 36;
 	int upperBound = 60;
 

@@ -30,14 +30,33 @@ void NoteGenMelodic::generateRandomNote() {
   this->melodicNotes[0]->setNote(currNoteNumber);
   this->harmonicNotes[0] = this->melodicNotes[0];
 	this->endingNoteIndex = 1;
-  for (int i = 0; i < 7; i++) {
-    currNoteNumber += MajorSteps[i];
-		this->endingNoteIndex++;
-    if (currNoteNumber >= endingNote) {
-      break;
-    }
-    this->melodicNotes[i + 1]->setNote(currNoteNumber);
-  }
+	if(this->tunningMode == JUST){
+		double rootPitch = this->melodicNotes[0]->getPitch();
+		int currStep = -1;
+		for (int i = 0; i < 7; i++) {
+			currStep += MajorSteps[i];
+			currNoteNumber += MajorSteps[i];
+			this->endingNoteIndex++;
+			if (currNoteNumber >= endingNote) {
+				break;
+			}
+			std::cout << "CURR STEP: " << currStep << std::endl;
+			this->melodicNotes[i + 1]->setPitch(
+					rootPitch * 
+					TunningJustRatio[currStep]
+					);
+		}
+	}
+	else{
+		for (int i = 0; i < 7; i++) {
+			currNoteNumber += MajorSteps[i];
+			this->endingNoteIndex++;
+			if (currNoteNumber >= endingNote) {
+				break;
+			}
+			this->melodicNotes[i + 1]->setNote(currNoteNumber);
+		}
+	}
 	this->melodicNotes[this->endingNoteIndex-1]->setNote(endingNote);
   this->harmonicNotes[1] = this->melodicNotes[this->endingNoteIndex-1];
 }

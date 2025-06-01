@@ -40,6 +40,18 @@ enum NoteStepNameIndex{
 	P8,
 };
 
+const double TunningPythagoreanRatio[] = {
+	1.0534979, 1.125, 1.1851852, 1.265625, 1.3333333,
+	1.4046639, // Diminished 5th
+	1.4238281, // Augmented 4th
+	1.5, 1.5802469, 1.6875, 1.7777778, 1.8984375
+};
+
+const double TunningJustRatio[] = {
+	1.0666667, 1.125, 1.2, 1.25, 1.3333333, 1.40625, 
+	1.5, 1.6, 1.6666667, 1.8, 1.875
+};
+
 const int MajorSteps[] = {
 	2, 2, 1, 2, 2, 2, 1
 };
@@ -70,6 +82,9 @@ public:
   void setNote(int noteNumber);
 	void incrementNote(int halfSteps);
 
+	double getPitch();
+	void setPitch(double pitch);
+
   bool isPlaying;
   void start();
   void stop();
@@ -87,6 +102,7 @@ private:
   sf::SoundBuffer noteBuffer;
 
 	int currentNote;
+	double currentPitch;
 
   double parseNote(std::string strName);
   double parseNote(int noteNumber);
