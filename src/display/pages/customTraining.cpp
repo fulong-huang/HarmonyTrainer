@@ -68,6 +68,7 @@ void CustomTraining::handleMouseClick(SoundControl* soundControl, sf::Vector2i m
 							keepAlNum(item->getTitle())+".txt",
 							soundControl
 							);
+					this->soundControl->trigger();
 					break;
 				}
 				else if(status == 2){
@@ -84,6 +85,7 @@ void CustomTraining::handleMouseClick(SoundControl* soundControl, sf::Vector2i m
 			this->customTrainingSetting.resetScroll();
 			break;
 		case CONTENT:
+			this->soundControl->trigger();
 			this->currentPage = Page::LIST;
 			this->customTrainingContent.resetScroll();
 			break;

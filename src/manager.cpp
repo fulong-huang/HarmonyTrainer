@@ -26,7 +26,7 @@ void Manager::run() {
 			}
 			else if(event.type == sf::Event::MouseButtonPressed){
 				this->handleMouseClick(sf::Mouse::getPosition(this->window));
-				this->soundControl.trigger();
+				// this->soundControl.trigger();
 			}
 // 			else if(event.type == sf::Event::KeyPressed){
 // 				if(event.key.code == sf::Keyboard::Down){
